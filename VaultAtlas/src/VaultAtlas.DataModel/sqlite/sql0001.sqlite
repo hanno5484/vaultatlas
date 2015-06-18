@@ -1,0 +1,19 @@
+﻿/* Vaultatlas schema */
+
+CREATE TABLE Artists (SortName TEXT PRIMARY KEY, DisplayName TEXT, ETreeArtistID INTEGER, Abbreviation TEXT, Folder TEXT);
+
+CREATE TABLE Shows(UID TEXT PRIMARY KEY, Artist TEXT, Date TEXT, Venue TEXT, City TEXT, Length TEXT, Source TEXT, Comments TEXT, DateUpdated TEXT, Quality TEXT, Loc TEXT, IsPublic INTEGER, NeedReplacement INTEGER, IsMaster INTEGER, IsVideo INTEGER, IsObsolete INTEGER, SHN TEXT, TSource TEXT, FolderName TEXT);
+
+CREATE TABLE Settings(Key TEXT PRIMARY KEY, Value TEXT);
+
+CREATE TABLE Resources(UID TEXT PRIMARY KEY, UID_Show TEXT, Key TEXT, Value TEXT, Owner TEXT, Type TEXT);
+
+CREATE TABLE Folders(Name TEXT PRIMARY KEY);
+
+/* Flacatlas schema */
+
+create table Disc(DiscNumber TEXT PRIMARY KEY, VolumeID TEXT, SerialNumber TEXT);
+
+create table Directory(UID TEXT PRIMARY KEY, Name TEXT, ParentUID TEXT, DiscNumber TEXT, DisplayName TEXT, IsNotRead INTEGER);
+
+create table FileInfo(UID TEXT PRIMARY KEY, Directory TEXT, Name TEXT, Size INTEGER, Length INTEGER, DateLastModified TEXT, FullPath TEXT, DisplayName TEXT, Content BLOB);

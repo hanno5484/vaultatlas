@@ -1,0 +1,468 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3478D19B-96FE-4949-A627-5E15B9A5C88E}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>App.ico</ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>VaultAtlas.Editor</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>VaultAtlas</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>VaultAtlas.MainForm</StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CarlosAg.ExcelXmlWriter, Version=1.0.0.6, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\refsources\CarlosAg.ExcelXmlWriter.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Data.SQLite, Version=1.0.93.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Subversion\vaultatlas\trunk\dep\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+    <ProjectReference Include="..\VaultAtlas.DataModel\VaultAtlas.DataModel.csproj">
+      <Name>VaultAtlas.DataModel</Name>
+      <Project>{C1D1C538-7BFD-4883-9ACE-67B85DE79435}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.ico" />
+    <EmbeddedResource Include="resources.de.resx" />
+    <EmbeddedResource Include="Resources\close.png" />
+    <EmbeddedResource Include="Resources\database_large.png" />
+    <EmbeddedResource Include="Resources\database.png" />
+    <None Include="Resources\statusvideo.png" />
+    <None Include="Resources\statusreplace.png" />
+    <None Include="Resources\statusprivate.png" />
+    <None Include="Resources\statusmaster.png" />
+    <EmbeddedResource Include="Artists\GratefulDead\Deadlists.xml" />
+    <EmbeddedResource Include="Artists\Wilco\events.xml" />
+    <None Include="Resources\FlacAtlas.ico" />
+    <None Include="Resources\InfoBubble.png" />
+    <Compile Include="Artists\GratefulDead\PlugIn.cs" />
+    <Compile Include="Artists\GratefulDead\ShowEditPlugIn.cs" />
+    <Compile Include="Artists\Wilco\PlugIn.cs" />
+    <Compile Include="Artists\Wilco\ShowEditPlugIn.cs" />
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="FlacAtlas\AddRowsTransaction.cs" />
+    <Compile Include="FlacAtlas\DriveInformation.cs" />
+    <Compile Include="FlacAtlas\ExcelExporter.cs" />
+    <Compile Include="FlacAtlas\FileContentDialog.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FlacAtlas\FileContentDialog.Designer.cs">
+      <DependentUpon>FileContentDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FlacAtlas\FlacAtlasBaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FlacAtlas\FolderPropertyDialog.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FlacAtlas\IconManager.cs" />
+    <Compile Include="FlacAtlas\LocalFileSystemProvider.cs" />
+    <Compile Include="FlacAtlas\FlacAtlasControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FlacAtlas\SearchState.cs" />
+    <Compile Include="FlacAtlas\SettingsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FlacAtlas\SettingsDialog.Designer.cs">
+      <DependentUpon>SettingsDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FlacAtlas\VolumeImporter.cs" />
+    <Compile Include="FlacAtlas\VolumeImporterDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FlacAtlas\VolumeImporterDialog.Designer.cs">
+      <DependentUpon>VolumeImporterDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UI\SearchControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\SearchControl.Designer.cs">
+      <DependentUpon>SearchControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VaultAtlasApplication.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AutoCompleter\ComboBoxAutoCompleter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\AutoCompleter\TextBoxAutoCompleter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\BuiltInPlugIn.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\ArtistDisplayNameCell.cs">
+    </Compile>
+    <Compile Include="UI\Controls\CachedGraphics.cs" />
+    <Compile Include="UI\Controls\DataExplorer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\FilePicker.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\FilePicker.Designer.cs">
+      <DependentUpon>FilePicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\MRUMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\ShowDateCell.cs" />
+    <Compile Include="UI\Controls\ShowGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\ShowGridView.Designer.cs">
+      <DependentUpon>ShowGridView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\AssociatedShows.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\AssociatedShows.Designer.cs">
+      <DependentUpon>AssociatedShows.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\StatusCell.cs" />
+    <Compile Include="UI\DialogArtist.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\EditShow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Export\ExcelExporter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\Export\XMLExporter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FilterTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\MRUMenuItem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\SearchReplace\ReplaceChoiceDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SearchReplace\ReplaceDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\SearchReplace\SearchResultList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\SearchReplace\SearchState.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="UI\SetlistTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\ShowEditData.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\ShowResourceEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\ShowResourceTextEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\ShowResourceTextEditor.Designer.cs">
+      <DependentUpon>ShowResourceTextEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\VaultExplorer\ArtistExplorer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\VaultExplorer\RecentAdditions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\VaultExplorer\SortControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\VaultExplorer\Sorting.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <EmbeddedResource Include="ExportStyles\Default.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExportStyles\Default.xslt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExportStyles\Kopie von Default.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExportStyles\Simple.xslt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FlacAtlas\FileContentDialog.resx">
+      <DependentUpon>FileContentDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FlacAtlas\FolderPropertyDialog.de.resx">
+      <DependentUpon>FolderPropertyDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FlacAtlas\FolderPropertyDialog.resx">
+      <DependentUpon>FolderPropertyDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FlacAtlas\FlacAtlasControl.de.resx">
+      <DependentUpon>FlacAtlasControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FlacAtlas\FlacAtlasControl.en.resx">
+      <DependentUpon>FlacAtlasControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FlacAtlas\FlacAtlasControl.resx">
+      <DependentUpon>FlacAtlasControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FlacAtlas\SettingsDialog.de.resx">
+      <DependentUpon>SettingsDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FlacAtlas\SettingsDialog.resx">
+      <DependentUpon>SettingsDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FlacAtlas\VolumeImporter.resx">
+      <DependentUpon>VolumeImporter.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FlacAtlas\VolumeImporterDialog.de.resx">
+      <DependentUpon>VolumeImporterDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FlacAtlas\VolumeImporterDialog.resx">
+      <DependentUpon>VolumeImporterDialog.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\DataExplorer.resx">
+      <DependentUpon>DataExplorer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\FilePicker.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FilePicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\ShowGridView.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ShowGridView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\AssociatedShows.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AssociatedShows.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\DialogArtist.resx">
+      <DependentUpon>DialogArtist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\EditShow.resx">
+      <DependentUpon>EditShow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Export\XMLExporter.de.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>XMLExporter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Export\XMLExporter.resx">
+      <DependentUpon>XMLExporter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FilterTree.resx">
+      <DependentUpon>FilterTree.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\MainForm.de.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SearchControl.resx">
+      <DependentUpon>SearchControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SearchReplace\ReplaceChoiceDialog.resx">
+      <DependentUpon>ReplaceChoiceDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SearchReplace\ReplaceDialog.resx">
+      <DependentUpon>ReplaceDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SearchReplace\SearchResultList.resx">
+      <DependentUpon>SearchResultList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\SetlistTree.resx">
+      <DependentUpon>SetlistTree.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ShowEditData.resx">
+      <DependentUpon>ShowEditData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ShowResourceEditor.resx">
+      <DependentUpon>ShowResourceEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\ShowResourceTextEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ShowResourceTextEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\VaultExplorer\ArtistExplorer.resx">
+      <DependentUpon>ArtistExplorer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\VaultExplorer\RecentAdditions.resx">
+      <DependentUpon>RecentAdditions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\VaultExplorer\SortControl.resx">
+      <DependentUpon>SortControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\VaultExplorer\Sorting.resx">
+      <DependentUpon>Sorting.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

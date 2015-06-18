@@ -1,0 +1,5 @@
+﻿/* Erweitern Disc um BIT IsFullyRead 
+   Erweitern Show um UID_Directory
+   Erweitern Show um INT BitsPerSample, INT Numberchannels, INT SampleRate, STRING Format
+*/
+

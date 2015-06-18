@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VaultAtlasConfiguration>
+<PlugIns>
+	<PlugIn Assembly="VaultAtlas.PlugIn.Standard" Class="VaultAtlas.PlugIn.DefaultPlugIn"></PlugIn>
+	<PlugIn Assembly="VaultAtlas.PlugIn.Archive.WilcoBase" Class="VaultAtlas.PlugIn.Archive.WilcoBase.PlugIn"></PlugIn>
+	<PlugIn Assembly="VaultAtlas.PlugIn.Archive.GratefulDead" Class="VaultAtlas.PlugIn.Archive.GratefulDead.PlugIn"></PlugIn>
+</PlugIns>
+<AppConfiguration>
+	<add key="CheckForUpdates" value="false" />
+</AppConfiguration>
+</VaultAtlasConfiguration>

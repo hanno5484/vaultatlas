@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<xsl:transform version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+<xsl:template match="/">
+  <html><head>
+  <style><xsl:value-of select="/Grape/Settings[Name='Stylesheet']/Value"></xsl:value-of></style>
+  <xsl:variable name="linkbase" select="/Grape/Settings[Name='Linkbase']/Value"></xsl:variable>
+  <BASE HREF="{$linkbase}"></BASE>
+  </head>
+  
+  <body>
+
+<h2><xsl:value-of select="@ListName"/></h2>
+    <table border="0" cellpadding="2" cellspacing="0">
+
+<xsl:for-each select="/Grape/IncludedArtistsSet/IncludedArtists">
+
+<xsl:variable name="Artistname" select="DisplayName" />
+
+<TR><TD COLSPAN="5" CLASS="ArtistTitleCell"><SPAN CLASS="ArtistTitle"><xsl:value-of select="$Artistname" /></SPAN> <SPAN CLASS="NumberOfShows">(<xsl:value-of select="ShowCount"/> entries)</SPAN></TD></TR>
+
+<xsl:for-each select="/Grape/Shows[ArtistDisplay= $Artistname]">
+<xsl:sort select="Artist" />
+<xsl:sort select="Date" />
+
+      <tr>
+       	<TR>
+       	<TD width="100"><xsl:value-of select="Date" /></TD>
+       	<TD><xsl:value-of select="City" /></TD>
+       	<TD><xsl:value-of select="Venue" /></TD>
+       	<TD><xsl:value-of select="Length" /></TD>
+       	<TD><xsl:value-of select="Source" /></TD>
+       	</TR>
+      </tr>
+ </xsl:for-each> 
+ </xsl:for-each>
+ 
+    </table>
+    	</body></html>
+
+</xsl:template>
+</xsl:transform>

@@ -1,0 +1,37 @@
+TABLE
+{
+	font-family: Verdana;
+	font-size: 8pt;
+	color: black;
+}
+
+th
+{
+	padding: 2 3 2 3;
+	text-align: left;
+}
+
+td {
+
+}
+
+.ArtistTitleCell
+{
+	height: 25px;
+	padding: 15 0 0 0;
+}
+
+.ArtistTitle
+{
+	text-align: center;
+	font-size: 15px;
+	font-variant: small-caps;
+	font-weight: bold;
+}
+
+.NumberOfShows
+{
+	font-size: 9px;
+	font-style: italic;
+	padding: 0 0 0 10;
+}
