@@ -130,6 +130,7 @@
     <Compile Include="FlacAtlas\DiscDirectoryInfo.cs" />
     <Compile Include="FlacAtlas\Disc.cs" />
     <Compile Include="FlacAtlas\DiscFileInfo.cs" />
+    <Compile Include="FlacAtlas\MediaFormatInfo.cs" />
     <Compile Include="Formatters.cs" />
     <Compile Include="sqlite\ArtistsAdapter.cs">
       <SubType>Code</SubType>

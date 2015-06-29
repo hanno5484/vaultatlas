@@ -20,8 +20,7 @@ namespace VaultAtlas
 		    var newArtist = new Artist(Model.Artists.Table.NewRow()) { DisplayName = nameSuggestion, SortName = nameSuggestion };
 
             if (new UI.DialogArtist(newArtist).ShowDialog(MainForm) == DialogResult.OK)
-			{
-			    Model.Artists.Adapter.Update(Model.Artists.Table);
+            {
                 while (Model.Artists.Get(newArtist.SortName) != null)
                 {
                     MessageBox.Show(string.Format(resources.ArtistAlreadyExists, newArtist.SortName),
@@ -32,6 +31,7 @@ namespace VaultAtlas
 				}
 
                 newArtist.Row.Table.Rows.Add(newArtist.Row);
+                Model.Artists.Adapter.Update(Model.Artists.Table);
 
 				return newArtist;
 			}

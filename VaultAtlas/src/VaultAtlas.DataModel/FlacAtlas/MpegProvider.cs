@@ -1,40 +1,21 @@
 ﻿using System.IO;
+using VaultAtlas.FlacAtlas;
 
 namespace VaultAtlas.DataModel.FlacAtlas
 {
 
-    public class MpegProvider
+    public class MpegProvider : IFileMetaInfoProvider
     {
-        // Public variables for storing the information about the MP3
-        public int intBitRate;
-        public string strFileName;
-        public long lngFileSize;
-        public int intFrequency;
-        public string strMode;
-        public int intLength;
-        public string strLengthFormatted;
-
-        // Private variables used in the process of reading in the MP3 files
         private ulong bithdr;
         private bool boolVBitRate;
         private int intVFrames;
 
-        public bool ReadMpegInformation(string fileName)
+        public MediaFormatInfo GetMediaFormatInfo(string fileName)
         {
             var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             
-            // Set the filename not including the path information
-            strFileName = @fs.Name;
-            var chrSeparators = new char[] {'\\', '/'};
-            var strSeparator = strFileName.Split(chrSeparators);
-            int intUpper = strSeparator.GetUpperBound(0);
-            strFileName = strSeparator[intUpper];
-
-            // Replace ' with '' for the SQL INSERT statement
-            strFileName = strFileName.Replace("'", "''");
-
             // Set the file size
-            lngFileSize = fs.Length;
+            var lngFileSize = fs.Length;
 
             byte[] bytHeader = new byte[4];
             byte[] bytVBitRate = new byte[12];
@@ -47,7 +28,7 @@ namespace VaultAtlas.DataModel.FlacAtlas
                 fs.Position = intPos;
                 fs.Read(bytHeader, 0, 4);
                 intPos++;
-                LoadMP3Header(bytHeader);
+                LoadMpegHeader(bytHeader);
             } while (!IsValidHeader() && (fs.Position != fs.Length));
 
             // If the current file stream position is equal to the length,
@@ -56,9 +37,9 @@ namespace VaultAtlas.DataModel.FlacAtlas
             {
                 intPos += 3;
 
-                if (getVersionIndex() == 3) // MPEG Version 1
+                if (GetVersionIndex() == 3) // MPEG Version 1
                 {
-                    if (getModeIndex() == 3) // Single Channel
+                    if (GetModeIndex() == 3) // Single Channel
                     {
                         intPos += 17;
                     }
@@ -69,7 +50,7 @@ namespace VaultAtlas.DataModel.FlacAtlas
                 }
                 else // MPEG Version 2.0 or 2.5
                 {
-                    if (getModeIndex() == 3) // Single Channel
+                    if (GetModeIndex() == 3) // Single Channel
                     {
                         intPos += 9;
                     }
@@ -84,19 +65,24 @@ namespace VaultAtlas.DataModel.FlacAtlas
                 fs.Read(bytVBitRate, 0, 12);
                 boolVBitRate = LoadVBRHeader(bytVBitRate);
 
-                // Once the file's read in, then assign the properties of the file to the public variables
-                intBitRate = getBitrate();
-                intFrequency = getFrequency();
-                strMode = getMode();
-                intLength = getLengthInSeconds();
-                strLengthFormatted = getFormattedLength();
+
+                var mediaInfo = new MediaFormatInfo
+                {
+                    BitRate = GetBitrate(lngFileSize),
+                    SampleRate = GetFrequency(),
+                    NumberChannels = GetModeIndex() == 3 ? 1 : 2,
+                    LengthSeconds = GetLengthInSeconds(lngFileSize),
+                    FormatIdentifier = GetVersionIndex() == 3 ? "MP3" : "MP2"
+                };
+
                 fs.Close();
-                return true;
+                return mediaInfo;
             }
-            return false;
+
+            return null;
         }
 
-        private void LoadMP3Header(byte[] c)
+        private void LoadMpegHeader(byte[] c)
         {
             // this thing is quite interesting, it works like the following
             // c[0] = 00000011
@@ -120,16 +106,14 @@ namespace VaultAtlas.DataModel.FlacAtlas
             if (inputheader[0] == 88 && inputheader[1] == 105 &&
                 inputheader[2] == 110 && inputheader[3] == 103)
             {
-                int flags =
-                    (int)
-                    (((inputheader[4] & 255) << 24) | ((inputheader[5] & 255) << 16) | ((inputheader[6] & 255) << 8) |
-                     ((inputheader[7] & 255)));
+                var flags =
+                    ((inputheader[4] & 255) << 24) | ((inputheader[5] & 255) << 16) | ((inputheader[6] & 255) << 8) |
+                    ((inputheader[7] & 255));
                 if ((flags & 0x0001) == 1)
                 {
                     intVFrames =
-                        (int)
-                        (((inputheader[8] & 255) << 24) | ((inputheader[9] & 255) << 16) |
-                         ((inputheader[10] & 255) << 8) | ((inputheader[11] & 255)));
+                        ((inputheader[8] & 255) << 24) | ((inputheader[9] & 255) << 16) |
+                        ((inputheader[10] & 255) << 8) | ((inputheader[11] & 255));
                     return true;
                 }
                 else
@@ -143,126 +127,125 @@ namespace VaultAtlas.DataModel.FlacAtlas
 
         private bool IsValidHeader()
         {
-            return (((getFrameSync() & 2047) == 2047) &&
-                    ((getVersionIndex() & 3) != 1) &&
-                    ((getLayerIndex() & 3) != 0) &&
-                    ((getBitrateIndex() & 15) != 0) &&
-                    ((getBitrateIndex() & 15) != 15) &&
-                    ((getFrequencyIndex() & 3) != 3) &&
-                    ((getEmphasisIndex() & 3) != 2));
+            return (((GetFrameSync() & 2047) == 2047) &&
+                    ((GetVersionIndex() & 3) != 1) &&
+                    ((GetLayerIndex() & 3) != 0) &&
+                    ((GetBitrateIndex() & 15) != 0) &&
+                    ((GetBitrateIndex() & 15) != 15) &&
+                    ((GetFrequencyIndex() & 3) != 3) &&
+                    ((GetEmphasisIndex() & 3) != 2));
         }
 
-        private int getFrameSync()
+        private int GetFrameSync()
         {
             return (int) ((bithdr >> 21) & 2047);
         }
 
-        private int getVersionIndex()
+        private int GetVersionIndex()
         {
             return (int) ((bithdr >> 19) & 3);
         }
 
-        private int getLayerIndex()
+        private int GetLayerIndex()
         {
             return (int) ((bithdr >> 17) & 3);
         }
 
-        private int getProtectionBit()
+        private int GetProtectionBit()
         {
             return (int) ((bithdr >> 16) & 1);
         }
 
-        private int getBitrateIndex()
+        private int GetBitrateIndex()
         {
             return (int) ((bithdr >> 12) & 15);
         }
 
-        private int getFrequencyIndex()
+        private int GetFrequencyIndex()
         {
             return (int) ((bithdr >> 10) & 3);
         }
 
-        private int getPaddingBit()
+        private int GetPaddingBit()
         {
             return (int) ((bithdr >> 9) & 1);
         }
 
-        private int getPrivateBit()
+        private int GetPrivateBit()
         {
             return (int) ((bithdr >> 8) & 1);
         }
 
-        private int getModeIndex()
+        private int GetModeIndex()
         {
             return (int) ((bithdr >> 6) & 3);
         }
 
-        private int getModeExtIndex()
+        private int GetModeExtIndex()
         {
             return (int) ((bithdr >> 4) & 3);
         }
 
-        private int getCoprightBit()
+        private int GetCopyrightBit()
         {
             return (int) ((bithdr >> 3) & 1);
         }
 
-        private int getOrginalBit()
+        private int GetOriginalBit()
         {
             return (int) ((bithdr >> 2) & 1);
         }
 
-        private int getEmphasisIndex()
+        private int GetEmphasisIndex()
         {
             return (int) (bithdr & 3);
         }
 
-        private double getVersion()
+        private double GetVersion()
         {
             double[] table = {2.5, 0.0, 2.0, 1.0};
-            return table[getVersionIndex()];
+            return table[GetVersionIndex()];
         }
 
-        private int getLayer()
+        private int GetLayer()
         {
-            return (int) (4 - getLayerIndex());
+            return 4 - GetLayerIndex();
         }
 
-        private int getBitrate()
+        private int GetBitrate(long lngFileSize)
         {
             // If the file has a variable bitrate, then we return an integer average bitrate,
             // otherwise, we use a lookup table to return the bitrate
             if (boolVBitRate)
             {
-                double medFrameSize = (double) lngFileSize/(double) getNumberOfFrames();
-                return (int) ((medFrameSize*(double) getFrequency())/(1000.0*((getLayerIndex() == 3) ? 12.0 : 144.0)));
+                var medFrameSize = (double) lngFileSize/GetNumberOfFrames(lngFileSize);
+                return (int) ((medFrameSize*GetFrequency())/(1000.0*((GetLayerIndex() == 3) ? 12.0 : 144.0)));
             }
-            else
-            {
-                int[,,] table = {
-                                    {
-                                        // MPEG 2 & 2.5
-                                        {0, 8, 16, 24, 32, 40, 48, 56, 64, 80, 96, 112, 128, 144, 160, 0}, // Layer III
-                                        {0, 8, 16, 24, 32, 40, 48, 56, 64, 80, 96, 112, 128, 144, 160, 0}, // Layer II
-                                        {0, 32, 48, 56, 64, 80, 96, 112, 128, 144, 160, 176, 192, 224, 256, 0}
-                                        // Layer I
-                                    },
-                                    {
-                                        // MPEG 1
-                                        {0, 32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320, 0},
-                                        // Layer III
-                                        {0, 32, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320, 384, 0},
-                                        // Layer II
-                                        {0, 32, 64, 96, 128, 160, 192, 224, 256, 288, 320, 352, 384, 416, 448, 0}
-                                        // Layer I
-                                    }
-                                };
 
-                return table[getVersionIndex() & 1, getLayerIndex() - 1, getBitrateIndex()];
-            }
+            int[,,] table =
+            {
+                {
+                    // MPEG 2 & 2.5
+                    {0, 8, 16, 24, 32, 40, 48, 56, 64, 80, 96, 112, 128, 144, 160, 0}, // Layer III
+                    {0, 8, 16, 24, 32, 40, 48, 56, 64, 80, 96, 112, 128, 144, 160, 0}, // Layer II
+                    {0, 32, 48, 56, 64, 80, 96, 112, 128, 144, 160, 176, 192, 224, 256, 0}
+                    // Layer I
+                },
+                {
+                    // MPEG 1
+                    {0, 32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320, 0},
+                    // Layer III
+                    {0, 32, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320, 384, 0},
+                    // Layer II
+                    {0, 32, 64, 96, 128, 160, 192, 224, 256, 288, 320, 352, 384, 416, 448, 0}
+                    // Layer I
+                }
+            };
+
+            return table[GetVersionIndex() & 1, GetLayerIndex() - 1, GetBitrateIndex()];
         }
 
-        private int getFrequency()
+        private int GetFrequency()
         {
             int[,] table = {
                                {32000, 16000, 8000}, // MPEG 2.5
@@ -271,12 +254,12 @@ namespace VaultAtlas.DataModel.FlacAtlas
                                {44100, 48000, 32000} // MPEG 1
                            };
 
-            return table[getVersionIndex(), getFrequencyIndex()];
+            return table[GetVersionIndex(), GetFrequencyIndex()];
         }
 
-        private string getMode()
+        private string GetMode()
         {
-            switch (getModeIndex())
+            switch (GetModeIndex())
             {
                 default:
                     return "Stereo";
@@ -289,52 +272,22 @@ namespace VaultAtlas.DataModel.FlacAtlas
             }
         }
 
-        private int getLengthInSeconds()
+        private int GetLengthInSeconds(long lngFileSize)
         {
             // "intKilBitFileSize" made by dividing by 1000 in order to match the "Kilobits/second"
-            int intKiloBitFileSize = (int) ((8*lngFileSize)/1000);
-            return (int) (intKiloBitFileSize/getBitrate());
+            return (int) ((8*lngFileSize)/1000)/GetBitrate(lngFileSize);
         }
 
-        private string getFormattedLength()
-        {
-            // Complete number of seconds
-            int s = getLengthInSeconds();
-
-            // Seconds to display
-            int ss = s%60;
-
-            // Complete number of minutes
-            int m = (s - ss)/60;
-
-            // Minutes to display
-            int mm = m%60;
-
-            // Complete number of hours
-            int h = (m - mm)/60;
-
-            // Make "hh:mm:ss"
-            return h.ToString("D2") + ":" + mm.ToString("D2") + ":" + ss.ToString("D2");
-        }
-
-        private int getNumberOfFrames()
+        private int GetNumberOfFrames(long lngFileSize)
         {
             // Again, the number of MPEG frames is dependant on whether it's a variable bitrate MP3 or not
             if (!boolVBitRate)
             {
-                double medFrameSize =
-                    (double)
-                    (((getLayerIndex() == 3) ? 12 : 144)*((1000.0*(float) getBitrate())/(float) getFrequency()));
+                var medFrameSize = ((GetLayerIndex() == 3) ? 12 : 144)*((1000.0*GetBitrate(lngFileSize))/(float) GetFrequency());
                 return (int) (lngFileSize/medFrameSize);
             }
-            else
-                return intVFrames;
+
+            return intVFrames;
         }
-
-        /*
-
-
-
-     * */
     }
 }

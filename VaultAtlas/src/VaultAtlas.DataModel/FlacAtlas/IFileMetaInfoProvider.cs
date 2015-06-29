@@ -1,14 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using VaultAtlas.DataModel;
 
 namespace VaultAtlas.FlacAtlas
 {
 	public interface IFileMetaInfoProvider
 	{
-        IDictionary<string, object> GetMetaInfo(string file);
-
-		long GetLengthSeconds( string file );
+        MediaFormatInfo GetMediaFormatInfo(string file);
 
 	}
 }

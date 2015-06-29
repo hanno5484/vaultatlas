@@ -1,16 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
+using VaultAtlas.DataModel;
 
 namespace VaultAtlas.FlacAtlas
 {
 	public class FlacProvider : IFileMetaInfoProvider
 	{
-	    public const string KeyLengthSeconds = "LengthSeconds";
-	    public const string KeySampleRate = "SampleRate";
-        public const string KeyBitsPerSample = "BitsPerSample";
-	    public const string KeyNumberChannels = "NumberChannels";
-
         private string GetByteRepresentation(long b)
         {
             var build = new System.Text.StringBuilder();
@@ -36,9 +31,9 @@ namespace VaultAtlas.FlacAtlas
 
         #region IFileMetaInfoProvider Members
 
-        public IDictionary<string,object> GetMetaInfo(string file)
+        public MediaFormatInfo GetMediaFormatInfo(string file)
         {
-           var res = new Dictionary<string, object>();
+           var res = new MediaFormatInfo();
 
            using (var reader = new BinaryReader(new FileStream( file, FileMode.Open, FileAccess.Read, FileShare.Read)))
            {
@@ -47,7 +42,7 @@ namespace VaultAtlas.FlacAtlas
                 {
                     System.Windows.Forms.MessageBox.Show("Warning: " + file + " is not a valid FLAC file.");
                     // TODO mark file
-                    return res;
+                    return null;
                 }
 
                 reader.BaseStream.Position = 4;
@@ -83,10 +78,11 @@ namespace VaultAtlas.FlacAtlas
                             + thirdByte) >> 4;
                         
                         var seconds = (int)(sampleCount / sampleRate);
-                        res[KeyLengthSeconds] = seconds;
-                        res[KeySampleRate] = sampleRate;
-                        res[KeyBitsPerSample] = bitsPerSample;
-                        res[KeyNumberChannels] = numberChannels;
+                        res.LengthSeconds = seconds;
+                        res.SampleRate = sampleRate;
+                        res.BitsPerSample = bitsPerSample;
+                        res.NumberChannels = numberChannels;
+                        res.FormatIdentifier = "FLAC";
                     }
 
                     reader.BaseStream.Position = continuePosition;
@@ -95,14 +91,6 @@ namespace VaultAtlas.FlacAtlas
             }
 
             return res;
-        }
-
-        public long GetLengthSeconds(string file)
-        {
-            var metainfo = GetMetaInfo(file);
-            if (metainfo.ContainsKey(KeyLengthSeconds))
-                return (int) metainfo[KeyLengthSeconds];
-            return 0;
         }
 
         #endregion

@@ -84,16 +84,6 @@ namespace VaultAtlas.FlacAtlas
 
         private readonly FlacProvider _flacProvider = new FlacProvider();
 
-		public long GetLengthSeconds( string fileName ) 
-		{
-            if (fileName.ToLower().EndsWith(".flac")
-                || fileName.ToLower().EndsWith(".fla"))
-            {
-                return _flacProvider.GetLengthSeconds(fileName);
-            }
-            return 0;
-		}
-
         public long GetLengthSecondsDirectory(string directory)
         {
             return 0;

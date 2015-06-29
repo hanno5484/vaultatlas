@@ -449,8 +449,8 @@ namespace VaultAtlas
 					else
 						probableDate = "19"+probableDate;
 				}
-				if ( probableDate.Length > 11 )
-					probableDate = probableDate.Substring( 0, 11 );
+                if (probableDate.Length > 10)
+                    probableDate = probableDate.Substring(0, 10);
 				date = ShowDate.Parse( probableDate );
 				probableArtist = VaultAtlasApplication.Model.Artists.FindByAbbreviation( artistAbbrev );
 			} 
@@ -459,8 +459,7 @@ namespace VaultAtlas
 			var attr = File.GetAttributes(e.FileName);
 
 			var directory = ((attr & FileAttributes.Directory) == FileAttributes.Directory) ? e.FileName : Path.GetDirectoryName(e.FileName);
-			var length = new MediaFileInfoProvider(directory).GetLengthSecondsAllFiles();
-			var lengthStr = length > 0 ? (int)(length / 60) + "" : "";
+			var mediaFileInfoProvider = new MediaFileInfoProvider(directory);
 
 			//detect whether its a directory or file
 			var resourceFileName = ((attr & FileAttributes.Directory) == FileAttributes.Directory) ? null : e.FileName;
@@ -472,7 +471,7 @@ namespace VaultAtlas
                     resourceFileName = null;
             }
 
-		    VaultAtlasApplication.RequestEnterShow(probableArtist != null ? probableArtist.SortName : null, date, resourceFileName, s => s.Length = lengthStr);
+		    VaultAtlasApplication.RequestEnterShow(probableArtist != null ? probableArtist.SortName : null, date, resourceFileName, mediaFileInfoProvider.ApplyToShow);
 
 		}
 

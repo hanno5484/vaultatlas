@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using VaultAtlas.DataModel;
 using VaultAtlas.DataModel.FlacAtlas;
 
 namespace VaultAtlas.FlacAtlas
@@ -13,22 +15,38 @@ namespace VaultAtlas.FlacAtlas
 
         private readonly string _directory;
 
-        public long GetLengthSecondsAllFiles()
+        public void ApplyToShow(Show show)
         {
             var p = new FlacProvider();
 
-            var acc = Directory.GetFiles(_directory, "*.flac", SearchOption.AllDirectories).Sum(file => p.GetLengthSeconds(file));
+            var infos = GetAllFiles(_directory, "*.flac").Select(p.GetMediaFormatInfo).ToList();
 
-            return Directory.GetFiles(_directory, "*.mp3", SearchOption.AllDirectories).Aggregate(acc, (current, file) => current + GetLengthMpegFile(file));
+            if (!infos.Any())
+            {
+                infos = GetAllFiles(_directory, "*.mp3", "*.mp2").Select(fi => new MpegProvider().GetMediaFormatInfo(fi)).ToList();
+            }
+
+            var formatInfo = GetAggregateFormatInfo(infos);
+
+            if (formatInfo.LengthSeconds > 0)
+                show.LengthRaw = (formatInfo.LengthSeconds/60) + "";
         }
 
-        private int GetLengthMpegFile(string fileName)
+        private static IEnumerable<string> GetAllFiles(string directory, params string[] patterns)
         {
-            var mp3hdr = new MpegProvider();
-            bool ismp3 = mp3hdr.ReadMpegInformation(fileName);
-            if (ismp3)
-                return mp3hdr.intLength;
-            return 0;
+            return patterns.SelectMany(p => Directory.GetFiles(directory, p, SearchOption.AllDirectories)).Distinct();
+        }
+
+        private MediaFormatInfo GetAggregateFormatInfo(IEnumerable<MediaFormatInfo> formatInfos)
+        {
+            return new MediaFormatInfo
+            {
+                SampleRate = formatInfos.Max(f => f.SampleRate),
+                BitsPerSample = formatInfos.Max(f => f.BitsPerSample),
+                NumberChannels = formatInfos.Max(f => f.NumberChannels),
+                LengthSeconds = formatInfos.Sum(f => f.LengthSeconds),
+                FormatIdentifier = formatInfos.Select(f => f.FormatIdentifier).FirstOrDefault(f => f != null)
+            };
         }
     }
 }
