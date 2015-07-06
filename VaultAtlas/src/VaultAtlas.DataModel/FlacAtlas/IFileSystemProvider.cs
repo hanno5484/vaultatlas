@@ -9,12 +9,7 @@ namespace VaultAtlas.FlacAtlas
 		{
 			get;
 		}
-
-		DateTime GetLastModifiedDate( string fileName );
 		
-        string GetSerialNumber(string volume);
-        string GetVolumeName(string volume);
-
 	    IFileSystemDirectory GetRootDirectory();
 	}
 

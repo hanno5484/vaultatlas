@@ -123,4 +123,7 @@
   <data name="SaveFile" xml:space="preserve">
     <value>Save file</value>
   </data>
+  <data name="KeyTextFile" xml:space="preserve">
+    <value>Text file</value>
+  </data>
 </root>

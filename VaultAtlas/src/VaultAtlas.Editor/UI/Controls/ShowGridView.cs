@@ -1,9 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Text;
 using System.Windows.Forms;
 
 namespace VaultAtlas.UI.Controls
@@ -26,7 +21,7 @@ namespace VaultAtlas.UI.Controls
                 this.AutoGenerateColumns = false;
                 this.Columns.Clear();
                 
-                foreach (string columnName in columnNames)
+                foreach (var columnName in ColumnNames)
                 {
                     DataGridViewCell cellTemplate = null;
                     if (columnName.Equals("Artist"))
@@ -42,13 +37,14 @@ namespace VaultAtlas.UI.Controls
                         cellTemplate.ValueType = typeof(DateTime);
 
                     cellTemplate.Style.Padding = new Padding(2, 2, 2, 0);
-//                    cellTemplate.Style.Font = new Font("Tahoma", 8);
-                    DataGridViewColumn gridViewColumn = null;
-                    gridViewColumn = new DataGridViewColumn(cellTemplate);
-                    gridViewColumn.DataPropertyName = columnName;
-                    gridViewColumn.SortMode = DataGridViewColumnSortMode.Programmatic;
-                    gridViewColumn.HeaderText = columnName;
-                    this.Columns.Add(gridViewColumn);
+
+                    var gridViewColumn = new DataGridViewColumn(cellTemplate)
+                    {
+                        DataPropertyName = columnName,
+                        SortMode = DataGridViewColumnSortMode.Programmatic,
+                        HeaderText = columnName
+                    };
+                    Columns.Add(gridViewColumn);
                 }
             }
 
@@ -57,29 +53,20 @@ namespace VaultAtlas.UI.Controls
         protected override void OnDoubleClick(EventArgs e)
         {
             base.OnDoubleClick(e);
-            Point clientPoint = this.PointToClient(MousePosition);
-            int selIndex = this.HitTest(clientPoint.X, clientPoint.Y).RowIndex;
+            var clientPoint = PointToClient(MousePosition);
+            var selIndex = HitTest(clientPoint.X, clientPoint.Y).RowIndex;
 
             if (selIndex != -1 && this.ItemClicked != null)
             {
-                DataRow row = ((VaultAtlas.DataModel.CustomDataView)this.DataSource)[selIndex].Row;
-                this.ItemClicked(this, new VaultAtlas.DataModel.ShowEventArgs(selIndex, row));
+                var row = ((DataModel.CustomDataView)DataSource)[selIndex].Row;
+                this.ItemClicked(this, new DataModel.ShowEventArgs(selIndex, row));
             }
 
         }
 
         public event VaultAtlas.DataModel.ShowEvent ItemClicked;
 
-        private static string[] columnNames = new string[] { "Status", "Artist", "Date", "City", "Venue", "Quality", "Length", "Source", "DateUpdated" };
-
-        private int FindRow(DataRow row)
-        {
-            VaultAtlas.DataModel.CustomDataView view = (VaultAtlas.DataModel.CustomDataView)this.DataSource;
-            for (int i = 0; i < view.Count; ++i)
-                if (view[i].Row == row)
-                    return i;
-            return -1;
-        }
+        private static readonly string[] ColumnNames = { "Status", "Artist", "Date", "City", "Venue", "Quality", "Length", "Source", "DateUpdated" };
 
         public void NavigateTo(int showIndex)
         {

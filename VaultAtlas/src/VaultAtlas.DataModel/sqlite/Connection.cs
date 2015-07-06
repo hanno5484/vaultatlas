@@ -84,7 +84,11 @@ namespace VaultAtlas.DataModel.sqlite
         {
             Create();
 
-            return new SQLiteConnection(ConnectionString);
+            var conn = new SQLiteConnection(ConnectionString);
+
+            new Migration(conn).Migrate();
+
+            return conn;
         }
 
         private void CreateSchema(SQLiteConnection conn)

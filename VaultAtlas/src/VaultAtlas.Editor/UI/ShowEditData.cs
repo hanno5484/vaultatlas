@@ -691,13 +691,11 @@ namespace VaultAtlas.UI
                 this.comboBox2.Validating -= new CancelEventHandler(comboBox2_Validating);
                 this.comboBox4.Validating -= new CancelEventHandler(comboBox4_Validating);
                 this.textBox5.Validated -= new EventHandler(textBox5_Validated);
-                this.EditedShow.ValueChanged -= new ShowEvent(this.show_ValueChanged);
             }
 
             this.DataSourceIndex = showIndex;
             this.EditedShow = show;
 
-            this.EditedShow.ValueChanged += new ShowEvent(show_ValueChanged);
             this.show_ValueChanged(null, new ShowEventArgs(this.DataSourceIndex, this.EditedShow));
             this.provider = provider;
 

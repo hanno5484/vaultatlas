@@ -27,16 +27,6 @@ namespace VaultAtlas.FlacAtlas
 			}
 		}
 
-        public string GetSerialNumber(string volume)
-        {
-            return new DriveInformation(volume).SerialNumber;
-        }
-
-        public string GetVolumeName(string volume)
-        {
-            return new DriveInformation(volume).VolumeName;
-        }
-
 	    public IFileSystemDirectory GetRootDirectory()
 	    {
 	        return new LocalDirectory(RootName);
@@ -55,18 +45,6 @@ namespace VaultAtlas.FlacAtlas
 		}
 
 	    public string RootName { get; private set; }
-
-	    public DateTime GetLastModifiedDate( string fileName ) 
-		{
-			try 
-			{
-				return File.GetLastWriteTime( fileName );
-			} 
-			catch 
-			{
-				return DateTime.MinValue;
-			}
-		}
 
         public byte[] GetFileContent(string fileName)
         {

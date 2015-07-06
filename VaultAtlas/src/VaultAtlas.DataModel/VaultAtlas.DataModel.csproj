@@ -240,6 +240,7 @@
     <Compile Include="sqlite\Connection.cs" />
     <None Include="sqlite\LegacyFlacAtlasModel.cs" />
     <Compile Include="sqlite\LegacyVaultAtlasModel.cs" />
+    <Compile Include="sqlite\Migration.cs" />
     <Compile Include="sqlite\ShowsAdapter.cs" />
     <Compile Include="UndoRedo\PerformedAction.cs">
       <SubType>Code</SubType>

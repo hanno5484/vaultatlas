@@ -3,12 +3,13 @@
   1. Shows löschen
   2. Suchfunktion (SearchControl)
   3. wenn unter den shows weitergeschaltet wird über die pfeiltasten, dann wird nicht gespeichert
-  4. Show --> UID_FileInfo
-  
+  4. Migrationsfunktionalität: MediaFormatInfo-Spalten ergänzen
+  5. FlacAtlas/VaultAtlas Matching, anhand von MD5 oder SHN-IDs zum Beispiel
+     Datenmodell überlegen: show has folder, last seen folder?
+  6. Datenmodell für local folder
 
 - excel / xslt exporte sollten auf ispublic = false filtern.
 - needreplacement rausnehmen bei export?
-- roll gd/wilco plugins into main program
 - umschalten zwischen HH:MM:ss und xxx mins
 
 

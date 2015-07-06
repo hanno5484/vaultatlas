@@ -1,5 +1,13 @@
-﻿/* Erweitern Disc um BIT IsFullyRead 
-   Erweitern Show um UID_Directory
-   Erweitern Show um INT BitsPerSample, INT Numberchannels, INT SampleRate, STRING Format
-*/
+﻿/* media format info for shows */
 
+alter table Shows Add Column 'FormatId'	TEXT;
+alter table Shows Add Column 'BitRate' INTEGER;
+alter table Shows Add Column 'bps' INTEGER;
+alter table Shows Add Column 'SampleRate' INTEGER;
+alter table Shows Add Column 'NrChannels' INTEGER;
+
+/* folder for the show */
+alter table Shows Add Column 'UID_Directory' TEXT;
+
+/* is a disc writable? (e.g. a hard drive) . logically a bit */
+alter table Disc Add Column 'IsWritable' INTEGER;

@@ -21,15 +21,15 @@ namespace VaultAtlas.DataModel
 		{
 			get 
 			{
-				return this.internalDate;
+				return internalDate;
 			}
 		}
 
-		private long ticks 
+		private long Ticks 
 		{
 			get 
 			{
-				return this.internalDate.Ticks;
+				return internalDate.Ticks;
 			}
 		}
 
@@ -38,7 +38,7 @@ namespace VaultAtlas.DataModel
 		{
 			get 
 			{
-				return this.dateState;
+				return dateState;
 			}
 		}
 
@@ -97,52 +97,42 @@ namespace VaultAtlas.DataModel
 
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
-			string s = this.internalDate.ToString(format, formatProvider);
-			return s;
+		    return internalDate.ToString(format, formatProvider);
 		}
 
 		public override string ToString() 
 		{
-            return this.Year + "-" + this.Month + "-" + this.Day;
+            return Year + "-" + Month + "-" + Day;
         }
 
 		#endregion
 
 		public static ShowDate Now 
 		{
-			get 
-			{
-				return new ShowDate( DateTime.Now.Ticks );
-			}
+			get { return new ShowDate(DateTime.Now.Ticks); }
 		}
 
-		private static string Stuff( int s, int mask ) 
+		private static string Stuff( int s, int mask )
 		{
-			return mask != 0 ? "??" : (s > 9) ? s+"" : "0"+s;
+		    return mask != 0 ? "??" : (s > 9) ? s + "" : "0" + s;
 		}
 
         public string Year
         {
             get
             {
-                return (this.dateState & DateKnownState.YearUnknown) != 0 ? "????" : this.internalDate.Year.ToString();
+                return (dateState & DateKnownState.YearUnknown) != 0 ? "????" : internalDate.Year.ToString();
             }
         }
 
         public string Month
         {
-            get
-            {
-                return Stuff(this.internalDate.Month, (int)(this.dateState & DateKnownState.MonthUnknown));
-            }
+            get { return Stuff(internalDate.Month, (int) (dateState & DateKnownState.MonthUnknown)); }
         }
 
         public string Day
         {
-            get
-            {
-                return Stuff(this.internalDate.Day, (int)(this.dateState & DateKnownState.DayUnknown));
-            }
+            get { return Stuff(internalDate.Day, (int) (dateState & DateKnownState.DayUnknown)); }
         }
 
 		#region IConvertible Members
@@ -164,7 +154,7 @@ namespace VaultAtlas.DataModel
 
 		public DateTime ToDateTime(IFormatProvider provider)
 		{
-			return new DateTime(this.ticks);
+			return new DateTime(this.Ticks);
 		}
 
 		public float ToSingle(IFormatProvider provider)

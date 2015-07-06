@@ -70,6 +70,15 @@ namespace VaultAtlas.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Text file.
+        /// </summary>
+        internal static string KeyTextFile {
+            get {
+                return ResourceManager.GetString("KeyTextFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save file.
         /// </summary>
         internal static string SaveFile {

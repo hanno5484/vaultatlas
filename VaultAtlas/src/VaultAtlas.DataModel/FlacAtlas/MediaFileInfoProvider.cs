@@ -30,6 +30,12 @@ namespace VaultAtlas.FlacAtlas
 
             if (formatInfo.LengthSeconds > 0)
                 show.LengthRaw = (formatInfo.LengthSeconds/60) + "";
+
+            show.BitRate = formatInfo.BitRate;
+            show.SampleRate = formatInfo.SampleRate;
+            show.Bps = formatInfo.BitsPerSample;
+            show.NrChannels = formatInfo.NumberChannels;
+            show.FormatIdentifier = formatInfo.FormatIdentifier;
         }
 
         private static IEnumerable<string> GetAllFiles(string directory, params string[] patterns)
@@ -37,7 +43,7 @@ namespace VaultAtlas.FlacAtlas
             return patterns.SelectMany(p => Directory.GetFiles(directory, p, SearchOption.AllDirectories)).Distinct();
         }
 
-        private MediaFormatInfo GetAggregateFormatInfo(IEnumerable<MediaFormatInfo> formatInfos)
+        private static MediaFormatInfo GetAggregateFormatInfo(IEnumerable<MediaFormatInfo> formatInfos)
         {
             return new MediaFormatInfo
             {

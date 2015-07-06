@@ -3,6 +3,7 @@ using VaultAtlas.DataModel;
 using System;
 using System.IO;
 using System.Windows.Forms;
+using VaultAtlas.Properties;
 
 namespace VaultAtlas
 {
@@ -15,7 +16,9 @@ namespace VaultAtlas
 
 	    public static MainForm MainForm;
 
-		public static Artist RequestEnterArtist(string nameSuggestion)
+        private static readonly Regex RegexShnId = new Regex(@"\d{5,6}");
+
+	    public static Artist RequestEnterArtist(string nameSuggestion)
 		{
 		    var newArtist = new Artist(Model.Artists.Table.NewRow()) { DisplayName = nameSuggestion, SortName = nameSuggestion };
 
@@ -50,7 +53,13 @@ namespace VaultAtlas
 			    {
 			        var adapter = newShow.GetResourcesAdapter();
 			        var newRow = adapter.Table.NewRow();
-			        var res = new Resource(newRow) {Key = "Text file", Value = content, UidShow = newShow.UID, Uid = Guid.NewGuid().ToString(), ResourceType = "Text"};
+			        var res = new Resource(newRow)
+			        {
+			            Key = Resources.KeyTextFile, Value = content,
+			            UidShow = newShow.UID,
+			            Uid = Guid.NewGuid().ToString(),
+			            ResourceType = "Text"
+			        };
 			        adapter.Table.Rows.Add(newRow);
 			        adapter.Adapter.Update(new[] {res.Row});
 			    }
@@ -66,8 +75,7 @@ namespace VaultAtlas
 		        if (!string.IsNullOrEmpty(folderName))
 		        {
                     newShow.FolderName = folderName;
-                    var regex = new Regex(@"\d{5,6}");
-		            var match = regex.Match(newShow.FolderName);
+		            var match = RegexShnId.Match(newShow.FolderName);
 		            if (match.Success)
 		            {
 		                newShow.SHN = match.Value;

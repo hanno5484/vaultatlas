@@ -15,8 +15,6 @@ namespace VaultAtlas.DataModel
 	            UID = Guid.NewGuid().ToString();
 	    }
 
-	    public event ShowEvent ValueChanged;
-
 	    public byte Quality
 	    {
 	        get
@@ -95,11 +93,47 @@ namespace VaultAtlas.DataModel
             set { Row["FolderName"] = value; }
         }
 
-	    public string UID
-	    {
-	        get { return Row.Field<string>("UID"); }
+        public string UID
+        {
+            get { return Row.Field<string>("UID"); }
             private set { Row["UID"] = value; }
-	    }
+        }
+
+        public string UidDirectory
+        {
+            get { return Row.Field<string>("UID_Directory"); }
+            set { Row["UID_Directory"] = value; }
+        }
+
+        public string FormatIdentifier
+        {
+            get { return Row.Field<string>("FormatId"); }
+            set { Row["FormatId"] = value; }
+        }
+
+        public long BitRate
+        {
+            get { return Row.Field<long>("BitRate"); }
+            set { Row["BitRate"] = value; }
+        }
+
+        public long Bps
+        {
+            get { return Row.Field<long>("Bps"); }
+            set { Row["Bps"] = value; }
+        }
+
+        public long SampleRate
+        {
+            get { return Row.Field<long>("SampleRate"); }
+            set { Row["SampleRate"] = value; }
+        }
+
+        public long NrChannels
+        {
+            get { return Row.Field<long>("NrChannels"); }
+            set { Row["NrChannels"] = value; }
+        }
 
 	    public string Display 
 		{

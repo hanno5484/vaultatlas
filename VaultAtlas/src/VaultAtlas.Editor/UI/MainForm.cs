@@ -404,12 +404,12 @@ namespace VaultAtlas
             }
         }
 
-	    private void menuExit_Click(object sender, System.EventArgs e)
+	    private void menuExit_Click(object sender, EventArgs e)
 	    {
 	        Application.Exit();
 	    }
 
-		private void menuItem19_Click(object sender, System.EventArgs e)
+		private void menuItem19_Click(object sender, EventArgs e)
 		{
 			var exp = new UI.Export.XMLExporter();
             this.AddOwnedForm(exp);
