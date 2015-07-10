@@ -31,18 +31,21 @@
             this.listView1 = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.buttonAssociate = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listView1
             // 
+            this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.listView1.CheckBoxes = true;
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
             this.columnHeader2});
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView1.Location = new System.Drawing.Point(0, 0);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(618, 369);
+            this.listView1.Size = new System.Drawing.Size(618, 320);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -55,10 +58,22 @@
             // 
             this.columnHeader2.Width = 300;
             // 
+            // buttonAssociate
+            // 
+            this.buttonAssociate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAssociate.Location = new System.Drawing.Point(494, 331);
+            this.buttonAssociate.Name = "buttonAssociate";
+            this.buttonAssociate.Size = new System.Drawing.Size(111, 23);
+            this.buttonAssociate.TabIndex = 1;
+            this.buttonAssociate.Text = "Associate selected";
+            this.buttonAssociate.UseVisualStyleBackColor = true;
+            this.buttonAssociate.Click += new System.EventHandler(this.buttonAssociate_Click);
+            // 
             // MatchingResultViewer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.buttonAssociate);
             this.Controls.Add(this.listView1);
             this.Name = "MatchingResultViewer";
             this.Size = new System.Drawing.Size(618, 369);
@@ -71,5 +86,6 @@
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.Button buttonAssociate;
     }
 }

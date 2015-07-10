@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data;
 using VaultAtlas.DataModel;
@@ -436,7 +437,7 @@ namespace VaultAtlas.FlacAtlas
 		    var str = string.Join(", ", dict.Select(v => v.Key + ": " + v.Value));
 		}
 
-        public void ImportDisc()
+        public async Task ImportDisc()
         {
             var vid = new VolumeImporterDialog
             {
@@ -459,16 +460,16 @@ namespace VaultAtlas.FlacAtlas
 
             var newDiscNumber = vid.NewDiscNumber;
 
-            WaitCallback callback = state => importer.ImportDisc((IProgressCallback) state, vid.NewDiscNumber, di.VolumeName, di.SerialNumber);
+            var progressDialog = GetProgressDialog();
 
-            RunWithProgressDialog(callback, () =>
-            {
-                RefreshView();
-                SelectDisc(newDiscNumber);
-            });
+            await importer.ImportDisc(progressDialog, vid.NewDiscNumber, di.VolumeName, di.SerialNumber).ConfigureAwait(false);
+            
+            RefreshView();
+            SelectDisc(newDiscNumber);
+            
         }
 
-	    private void RunWithProgressDialog(WaitCallback callback, Action finishedDelegate)
+	    private IProgressCallback GetProgressDialog()
 	    {
 	        var p = new ProgressWindow
 	        {
@@ -476,8 +477,7 @@ namespace VaultAtlas.FlacAtlas
                 ProgressVisible = false
 	        };
 	        p.Show(FindForm());
-	        p.FormClosed += (o, args) => finishedDelegate();
-	        ThreadPool.QueueUserWorkItem(callback, p);
+	        return p;
 	    }
 
 	    public void ImportHardDrive()
@@ -556,7 +556,7 @@ namespace VaultAtlas.FlacAtlas
             }
         }
 
-	    public void ImportLocalFolderStructure()
+	    public async Task ImportLocalFolderStructure()
 	    {
             var fdb = new FolderBrowserDialog
             {
@@ -568,28 +568,35 @@ namespace VaultAtlas.FlacAtlas
             if (fdb.ShowDialog() != DialogResult.OK)
                 return;
 
-	        // find disc that matches the local folder
-            var driveInformation = new DriveInformation(Directory.GetDirectoryRoot(fdb.SelectedPath));
+	        await ImportLocalFolderStructure(fdb.SelectedPath).ConfigureAwait(false);
+	    }
+
+	    public async Task<DiscDirectoryInfo> ImportLocalFolderStructure(string path)
+	    {
+            // find disc that matches the local folder
+	        var driveInformation = new DriveInformation(Directory.GetDirectoryRoot(path));
 	        var rows = DataManager.Get().Discs.Table.Select(string.Format("iswritable='1' and serialnumber = '{0}' and volumeid='{1}'",
 	            driveInformation.SerialNumber, driveInformation.VolumeName));
 
 	        if (rows.Length == 0)
 	        {
 	            MessageBox.Show(Resources.NoMatchingCatalogFound, Constants.ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-	            return;
+	            return await Task.FromResult<DiscDirectoryInfo>(null).ConfigureAwait(false);
 	        }
 
-            // now we have the root of the catalog
+	        // now we have the root of the catalog
 	        var row = rows.First();
 	        var disc = new Disc(row);
-            var rootDirInfo = disc.GetRootDir();
+	        var rootDirInfo = disc.GetRootDir();
 	        var localDirectoryPath = rootDirInfo.GetLocalDirectoryPath();
 	        var importer = new RecursiveImporter(new LocalDirectory(localDirectoryPath));
 
-	        RunWithProgressDialog(state => importer.ImportPartialStructure((IProgressCallback) state, rootDirInfo, fdb.SelectedPath, disc), () => { });
+	        var progressCallback = GetProgressDialog();
+
+	        return await importer.ImportPartialStructure(progressCallback, rootDirInfo, path, disc).ConfigureAwait(false);
 	    }
 
-        private void menuItem15_Click(object sender, EventArgs e)
+	    private void menuItem15_Click(object sender, EventArgs e)
         {
             // TODO QUANTUM
             TreeNode node = this.treeView1.SelectedNode;

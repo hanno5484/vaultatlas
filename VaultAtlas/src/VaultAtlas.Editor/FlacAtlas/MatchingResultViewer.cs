@@ -18,6 +18,8 @@ namespace VaultAtlas.FlacAtlas
             InitializeComponent();
         }
 
+        public Action<string, Show> AssociateAction { get; set; }
+
         public void AddItems(IDictionary<string, Show> items)
         {
             try
@@ -29,6 +31,7 @@ namespace VaultAtlas.FlacAtlas
                     var lvi = new ListViewItem();
                     lvi.Text = item.Key;
                     lvi.SubItems.Add(item.Value.Display);
+                    lvi.Tag = item.Value;
                     lvi.Checked = true;
                     listView1.Items.Add(lvi);
                 }
@@ -37,6 +40,22 @@ namespace VaultAtlas.FlacAtlas
             {
                 listView1.EndUpdate();
             }
+        }
+
+        private void AssociateSelected()
+        {
+            foreach (var item in listView1.CheckedItems.Cast<ListViewItem>())
+            {
+                var show = (Show) item.Tag;
+                var path = item.Text;
+
+                AssociateAction(path, show);
+            }
+        }
+
+        private void buttonAssociate_Click(object sender, EventArgs e)
+        {
+            AssociateSelected();
         }
     }
 }

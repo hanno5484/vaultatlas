@@ -18,11 +18,11 @@ namespace VaultAtlas.FlacAtlas
     {
         private static readonly MD5 Md5 = new MD5Cng();
 
-        public void Match()
+        public void Match(Action<string, Show> associateAction)
         {
             var showResourceInfos = new Dictionary<string, Resource>();
 
-            foreach (var resource in GetResourcesAdapter().Table.Rows.Cast<DataRow>().Select(r=>new Resource(r)))
+            foreach (var resource in GetResourcesAdapter().Table.Rows.Cast<DataRow>().Select(r => new Resource(r)))
             {
                 try
                 {
@@ -43,10 +43,10 @@ namespace VaultAtlas.FlacAtlas
 
 
             var form = new Form();
-            var v = new MatchingResultViewer {Dock = DockStyle.Fill};
+            var v = new MatchingResultViewer {Dock = DockStyle.Fill, AssociateAction = associateAction};
             form.Controls.Add(v);
             v.AddItems(res);
-            form.Show();
+            form.ShowDialog();
         }
 
 
@@ -138,7 +138,7 @@ namespace VaultAtlas.FlacAtlas
                         var s = GetMd5String(GetCanonicalString(Encoding.UTF8.GetString(fi.GetFileContent())));
                         if (targetDict.ContainsKey(s))
                         {
-                            result[f] = new Show(Model.SingleModel.Shows.Table.Rows.Find(targetDict[s].UidShow));
+                            result[localPath] = new Show(Model.SingleModel.Shows.Table.Rows.Find(targetDict[s].UidShow));
                         }
                     }
                     catch (Exception exc)

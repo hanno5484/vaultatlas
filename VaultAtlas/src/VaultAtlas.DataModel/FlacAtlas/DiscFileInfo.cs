@@ -50,6 +50,37 @@ namespace VaultAtlas.DataModel.FlacAtlas
         public long Length
         {
             get { return Row.Field<long?>("Length").GetValueOrDefault(); }
+            set { Row.SetField("Length", value); }
+        }
+
+        public string FormatIdentifier
+        {
+            get { return Row.Field<string>("FormatId"); }
+            set { Row["FormatId"] = value; }
+        }
+
+        public long BitRate
+        {
+            get { return Row.Field<long>("BitRate"); }
+            set { Row["BitRate"] = value; }
+        }
+
+        public long Bps
+        {
+            get { return Row.Field<long>("Bps"); }
+            set { Row["Bps"] = value; }
+        }
+
+        public long SampleRate
+        {
+            get { return Row.Field<long>("SampleRate"); }
+            set { Row["SampleRate"] = value; }
+        }
+
+        public long NrChannels
+        {
+            get { return Row.Field<long>("NrChannels"); }
+            set { Row["NrChannels"] = value; }
         }
 
         public DateTime LastModifiedDate

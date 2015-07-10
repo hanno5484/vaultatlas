@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using VaultAtlas.DataModel;
@@ -36,6 +37,18 @@ namespace VaultAtlas.FlacAtlas
             show.Bps = formatInfo.BitsPerSample;
             show.NrChannels = formatInfo.NumberChannels;
             show.FormatIdentifier = formatInfo.FormatIdentifier;
+        }
+
+        public static IFileMetaInfoProvider GetMetaInfoProvider(string file)
+        {
+            var ext = Path.GetExtension(file);
+            if (string.Equals(ext, ".flac", StringComparison.OrdinalIgnoreCase))
+                return new FlacProvider();
+            if (string.Equals(ext, ".mp3", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(ext, ".mp2", StringComparison.OrdinalIgnoreCase))
+                return new MpegProvider();
+
+            return null;
         }
 
         private static IEnumerable<string> GetAllFiles(string directory, params string[] patterns)

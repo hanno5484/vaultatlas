@@ -8,6 +8,7 @@
      Datenmodell überlegen: show has folder, last seen folder?
   6. Datenmodell für local folder
   7. refresh eines lokalen Katalogs
+  8. Aktuelles Problem: VolumeImporter öffnet mehrere dialogfenster/parallel in mehreren Connections
 
 - excel / xslt exporte sollten auf ispublic = false filtern.
 - needreplacement rausnehmen bei export?

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using VaultAtlas.DataModel;
 using VaultAtlas.DataModel.FlacAtlas;
 using VaultAtlas.DataModel.ModelUI;
@@ -27,7 +28,9 @@ namespace VaultAtlas.FlacAtlas
         /// </summary>
         private string _targetPath;
 
-        private void RecursiveImport(DiscDirectoryInfo parentDir, IFileSystemDirectory sourceDir, Disc disc)
+        public DiscDirectoryInfo TargetDirectoryInfo { get; private set; }
+
+        private void RecursiveImport(DiscDirectoryInfo parentDir, IFileSystemDirectory sourceDir, Disc disc, bool importAllSub)
         {
             var targetDir = parentDir == null
                 ? disc.GetRootDir()
@@ -39,15 +42,21 @@ namespace VaultAtlas.FlacAtlas
             try
             {
 
+                if (_targetPath != null && targetDir.GetLocalDirectoryPath().Equals(_targetPath))
+                {
+                    TargetDirectoryInfo = targetDir;
+                    importAllSub = true;
+                }
+
                 foreach (var subdir in sourceDir.GetSubDirectories())
                 {
                     // support sparse structure
-                    if (_targetPath != null && !_targetPath.StartsWith(subdir.GetLocalDirectoryPath()))
+                    if (!importAllSub && (_targetPath != null && !_targetPath.StartsWith(subdir.GetLocalDirectoryPath())))
                     {
                         continue;
                     }
 
-                    RecursiveImport(targetDir, subdir, disc);
+                    RecursiveImport(targetDir, subdir, disc, importAllSub);
                 }
 
                 foreach (var file in sourceDir.GetFiles())
@@ -96,8 +105,22 @@ namespace VaultAtlas.FlacAtlas
 
             newFileInfo["Directory"] = directoryUid;
             newFileInfo["Size"] = size;
-            newFileInfo["Length"] = file.GetLengthSeconds();
-            newFileInfo["DateLastModified"] = file.LastModifiedDate.ToString(System.Globalization.CultureInfo.InvariantCulture.DateTimeFormat);
+            newFileInfo["DateLastModified"] = file.LastModifiedDate.ToString("s", System.Globalization.CultureInfo.InvariantCulture.DateTimeFormat);
+
+            var mediaprovider = MediaFileInfoProvider.GetMetaInfoProvider(file.Name);
+            if (mediaprovider != null)
+            {
+                var formatInfo = mediaprovider.GetMediaFormatInfo(file.Name);
+                new DiscFileInfo(newFileInfo)
+                {
+                    BitRate = formatInfo.BitRate,
+                    SampleRate = formatInfo.SampleRate,
+                    Bps = formatInfo.BitsPerSample,
+                    NrChannels = formatInfo.NumberChannels,
+                    FormatIdentifier = formatInfo.FormatIdentifier,
+                    Length = formatInfo.LengthSeconds
+                };
+            }
         }
 
         private static DataRow GetOrCreateFileRow(AdapterBase filesAdapter, string fileName)
@@ -113,7 +136,7 @@ namespace VaultAtlas.FlacAtlas
             return newFileInfo;
         }
 
-        public void ImportDisc(IProgressCallback status, string discNumber, string volumeName, string serialNumber)
+        public async Task<Disc> ImportDisc(IProgressCallback status, string discNumber, string volumeName, string serialNumber)
         {
             try
             {
@@ -124,7 +147,7 @@ namespace VaultAtlas.FlacAtlas
                         Constants.ApplicationName, MessageBoxButtons.YesNoCancel);
 
                     if (result == DialogResult.Cancel)
-                        return;
+                        return null;
 
                     if (result == DialogResult.Yes)
                     {
@@ -141,10 +164,12 @@ namespace VaultAtlas.FlacAtlas
                 newRow.Table.Rows.Add(newRow);
                 var newDisc = new Disc(newRow);
                 var rootDir = newDisc.GetRootDir();
-                RecursiveImport(rootDir, _rootDirectory, newDisc);
+                await Task.Factory.StartNew(() => RecursiveImport(rootDir, _rootDirectory, newDisc, true)).ConfigureAwait(false);
                 rootDir.GetSubDirAdapter().Update();
 
                 rootDir.UpdateFullPath();
+
+                return newDisc;
             }
             catch (ThreadAbortException)
             {
@@ -159,18 +184,21 @@ namespace VaultAtlas.FlacAtlas
                 if (_callback != null)
                     _callback.End();
             }
+
+            return null;
         }
 
-        public void ImportPartialStructure(IProgressCallback status, DiscDirectoryInfo rootDir, string targetPath, Disc targetDisc)
+        public async Task<DiscDirectoryInfo> ImportPartialStructure(IProgressCallback status, DiscDirectoryInfo rootDir, string targetPath, Disc targetDisc)
         {
             try
             {
                 _targetPath = targetPath;
                 _callback = status;
-                RecursiveImport(null, _rootDirectory, targetDisc);
+                await Task.Factory.StartNew(() => RecursiveImport(null, _rootDirectory, targetDisc, false)).ConfigureAwait(false);
                 rootDir.GetSubDirAdapter().Update();
 
                 rootDir.UpdateFullPath();
+                return TargetDirectoryInfo;
             }
             finally
             {

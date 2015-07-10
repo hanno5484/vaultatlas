@@ -118,6 +118,7 @@ namespace VaultAtlas
             this.menuItem23 = new System.Windows.Forms.MenuItem();
             this.menuImportDisc = new System.Windows.Forms.MenuItem();
             this.menuItemImportHardDrive = new System.Windows.Forms.MenuItem();
+            this.menuItem2 = new System.Windows.Forms.MenuItem();
             this.menuItem10 = new System.Windows.Forms.MenuItem();
             this.menuItem19 = new System.Windows.Forms.MenuItem();
             this.menuItem41 = new System.Windows.Forms.MenuItem();
@@ -132,7 +133,6 @@ namespace VaultAtlas
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.searchControl1 = new VaultAtlas.UI.SearchControl();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.menuItem2 = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.statusBarPanel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.statusBarPanelContent)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.statusBarPanelLineNumber)).BeginInit();
@@ -246,6 +246,12 @@ namespace VaultAtlas
             resources.ApplyResources(this.menuItemImportHardDrive, "menuItemImportHardDrive");
             this.menuItemImportHardDrive.Click += new System.EventHandler(this.menuItemImportHardDrive_Click);
             // 
+            // menuItem2
+            // 
+            this.menuItem2.Index = 6;
+            resources.ApplyResources(this.menuItem2, "menuItem2");
+            this.menuItem2.Click += new System.EventHandler(this.menuItem2_Click);
+            // 
             // menuItem10
             // 
             this.menuItem10.Index = 3;
@@ -346,12 +352,6 @@ namespace VaultAtlas
             this.imageList1.Images.SetKeyName(0, "Movie Document 16 h p.png");
             this.imageList1.Images.SetKeyName(1, "Music Document 16 h p.png");
             this.imageList1.Images.SetKeyName(2, "Organizer 16 h p.png");
-            // 
-            // menuItem2
-            // 
-            this.menuItem2.Index = 6;
-            resources.ApplyResources(this.menuItem2, "menuItem2");
-            this.menuItem2.Click += new System.EventHandler(this.menuItem2_Click);
             // 
             // MainForm
             // 
@@ -595,7 +595,13 @@ namespace VaultAtlas
 
         private void menuMatchFlacAtlas_Click(object sender, EventArgs e)
         {
-            new ShowDirectoryMatcher().Match();
+            new ShowDirectoryMatcher().Match(async (path, show) =>
+            {
+                var ddi = await flacAtlasControl1.ImportLocalFolderStructure(path).ConfigureAwait(false);
+                show.UidDirectory = ddi.UID;
+            });
+
+            Model.SingleModel.Shows.Adapter.Update(Model.SingleModel.Shows.Table);
         }
 
 	    public Model Model
@@ -605,7 +611,7 @@ namespace VaultAtlas
 
         private void menuImportDisc_Click(object sender, EventArgs e)
         {
-            flacAtlasControl1.ImportDisc();
+            flacAtlasControl1.ImportDisc().ConfigureAwait(false);
         }
 
         private void menuItemImportHardDrive_Click(object sender, EventArgs e)
@@ -615,7 +621,7 @@ namespace VaultAtlas
 
         private void menuItem2_Click(object sender, EventArgs e)
         {
-            flacAtlasControl1.ImportLocalFolderStructure();
+            flacAtlasControl1.ImportLocalFolderStructure().ConfigureAwait(false);
         }
 	}
 }

@@ -1,0 +1,5 @@
+﻿alter table FileInfo Add Column 'FormatId'	TEXT;
+alter table FileInfo Add Column 'BitRate' INTEGER;
+alter table FileInfo Add Column 'bps' INTEGER;
+alter table FileInfo Add Column 'SampleRate' INTEGER;
+alter table FileInfo Add Column 'NrChannels' INTEGER;
