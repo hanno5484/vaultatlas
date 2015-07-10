@@ -6,25 +6,21 @@ namespace VaultAtlas.FlacAtlas
 {
     public class AddRowsTransaction : IDisposable
     {
-        public AddRowsTransaction(DataManager dataManager)
+        public AddRowsTransaction(DataSet dataSet)
         {
-            /* TODO QUANTUM
-            _dataSet = dataManager.Data;
-
-            foreach (DataTable tbl in _dataSet.Tables)
-                tbl.BeginLoadData();
-             */
+            foreach (DataTable t in dataSet.Tables)
+                t.BeginLoadData();
+            _dataSet = dataSet;
         }
-
-        public DataRow AddRow(string tablename)
+        
+        public DataRow AddRow(string tableName)
         {
-            var row = _dataSet.Tables[tablename].NewRow();
+            var row = _dataSet.Tables[tableName].NewRow();
             _rowsAdded.Add(row);
             return row;
         }
 
         private readonly DataSet _dataSet;
-
         private readonly IList<DataRow> _rowsAdded = new List<DataRow>();
 
         public void Abort()
@@ -45,8 +41,8 @@ namespace VaultAtlas.FlacAtlas
 
         void IDisposable.Dispose()
         {
-            foreach (DataTable tbl in this._dataSet.Tables)
-                    tbl.EndLoadData();
+            foreach (DataTable tbl in _dataSet.Tables)
+                tbl.EndLoadData();
         }
 
         #endregion

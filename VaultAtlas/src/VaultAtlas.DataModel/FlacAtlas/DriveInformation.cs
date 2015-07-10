@@ -77,7 +77,6 @@ namespace VaultAtlas.FlacAtlas
             return logDrives.Select(logDrive => new DriveInformation(logDrive))
                 .Where(di => di.VolumeType == VolumeType.CDROM && di.MediumPresent);
         }
-
     }
 
 

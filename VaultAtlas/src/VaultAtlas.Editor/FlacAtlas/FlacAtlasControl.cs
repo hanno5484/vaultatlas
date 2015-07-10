@@ -1,13 +1,17 @@
 using System.Collections.Generic;
 using System;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using System.Data;
 using VaultAtlas.DataModel;
 using VaultAtlas.DataModel.FlacAtlas;
+using VaultAtlas.DataModel.ModelUI;
 using VaultAtlas.DataModel.sqlite;
 using VaultAtlas.Properties;
+using VaultAtlas.UI;
 
 namespace VaultAtlas.FlacAtlas
 {
@@ -57,11 +61,7 @@ namespace VaultAtlas.FlacAtlas
 
         public void RefreshView()
         {
-            const int rootimageIndex = 0;
             treeView1.Nodes.Clear();
-            var rootNode = new TreeNode(resources.FlacAtlasRootName, rootimageIndex, rootimageIndex) {Tag = Disc.RootName};
-            treeView1.Nodes.Add(rootNode);
-
             FillDiscs();
         }
 
@@ -438,11 +438,14 @@ namespace VaultAtlas.FlacAtlas
 
         public void ImportDisc()
         {
-            var vid = new VolumeImporterDialog();
-            vid.DataManager = this.DataManager;
+            var vid = new VolumeImporterDialog
+            {
+                DataManager = DataManager
+            };
+
             if (vid.DriveCount == 0)
             {
-                MessageBox.Show(resources.NoDrivesAvailable, Constants.ApplicationName,MessageBoxButtons.OK,MessageBoxIcon.Error);
+                MessageBox.Show(resources.NoDrivesAvailable, Constants.ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (vid.ShowDialog() != DialogResult.OK)
@@ -450,39 +453,141 @@ namespace VaultAtlas.FlacAtlas
 
             var di = vid.SelectedDrive;
 
-            var importer = new RecursiveImporter(
-                new LocalFileSystemProvider(di.VolumeName), DataManager,
-                di.SerialNumber, di.VolumeName, vid.NewDiscNumber);
+            var rootDir = new LocalFileSystemProvider(di.VolumeName).GetRootDirectory();
+
+            var importer = new RecursiveImporter(rootDir);
 
             var newDiscNumber = vid.NewDiscNumber;
 
-            var p = new VaultAtlas.DataModel.ModelUI.ProgressWindow();
-            p.StartPosition = FormStartPosition.CenterParent;
-            Form.ActiveForm.AddOwnedForm(p);
-            p.ProgressVisible = false;
-            p.Show();
-            p.FormClosed += (o, args) =>
+            WaitCallback callback = state => importer.ImportDisc((IProgressCallback) state, vid.NewDiscNumber, di.VolumeName, di.SerialNumber);
+
+            RunWithProgressDialog(callback, () =>
             {
                 RefreshView();
                 SelectDisc(newDiscNumber);
-            };
-            System.Threading.ThreadPool.QueueUserWorkItem(
-                                      importer.DoImport,
-                                      p );
+            });
         }
 
-        private void SelectDisc(string discNumber)
+	    private void RunWithProgressDialog(WaitCallback callback, Action finishedDelegate)
+	    {
+	        var p = new ProgressWindow
+	        {
+	            StartPosition = FormStartPosition.CenterParent,
+                ProgressVisible = false
+	        };
+	        p.Show(FindForm());
+	        p.FormClosed += (o, args) => finishedDelegate();
+	        ThreadPool.QueueUserWorkItem(callback, p);
+	    }
+
+	    public void ImportHardDrive()
+	    {
+	        var fdb = new FolderBrowserDialog
+	        {
+	            RootFolder = Environment.SpecialFolder.MyComputer,
+                Description = resources.SelectFolder,
+                ShowNewFolderButton = false
+	        };
+
+	        if (fdb.ShowDialog() != DialogResult.OK)
+	            return;
+
+	        var selectedPath = fdb.SelectedPath;
+
+	        var discNumber = Path.GetFileName(selectedPath);
+	        var index = 1;
+	        while (DataManager.Discs.Table.Rows.Find(discNumber) != null)
+	            discNumber = Path.GetFileName(selectedPath) + (index++);
+
+            // get the directory root, e.g "F:\"
+	        var driveName = Directory.GetDirectoryRoot(selectedPath);
+
+	        var driveInformation = new DriveInformation(driveName);
+
+            // get the relative path, e.g. "\catalog"
+	        var relativePathOnVolume = GetRelativePathOnVolume(driveName, selectedPath);
+
+	        var newDisc = new Disc(DataManager.Discs.Table.NewRow())
+	        {
+                // mark this disc as writable --> sparse import, contents may change at any time
+	            IsWritable = true,
+	            DiscNumber = discNumber,
+	            PathOnVolume = relativePathOnVolume,
+	            VolumeID = driveInformation.VolumeName,
+	            SerialNumber = driveInformation.SerialNumber
+	        };
+
+	        var rootdir = new DiscDirectoryInfo(newDisc.CreateRootDirOnDisc());
+	        DataManager.Discs.Update(newDisc.Row);
+	        newDisc.GetDirectoriesAdapter().Update(rootdir.Row);
+
+            RefreshView();
+            SelectDisc(newDisc.DiscNumber);
+	    }
+
+	    private static string GetRelativePathOnVolume(string driveName, string selectedPath)
+	    {
+	        var relativePathOnVolume = PathHelper.GetRelativePath(driveName, selectedPath);
+
+	        if (relativePathOnVolume.StartsWith(@".\"))
+	            relativePathOnVolume = relativePathOnVolume.Substring(1);
+	        return relativePathOnVolume;
+	    }
+
+	    private void SelectDisc(string discNumber)
         {
-            foreach (TreeNode node in this.treeView1.Nodes[0].Nodes)
+            foreach (TreeNode node in treeView1.Nodes)
             {
-                if (node.Text == discNumber)
+                if (node.Text != discNumber)
+                    continue;
+
+                try
                 {
+                    treeView1.BeginUpdate();
+
                     node.EnsureVisible();
                     node.Expand();
-                    this.treeView1.SelectedNode = node;
+                    treeView1.SelectedNode = node;
+                }
+                finally
+                {
+                    treeView1.EndUpdate();
                 }
             }
         }
+
+	    public void ImportLocalFolderStructure()
+	    {
+            var fdb = new FolderBrowserDialog
+            {
+                RootFolder = Environment.SpecialFolder.MyComputer,
+                Description = resources.SelectFolder,
+                ShowNewFolderButton = false
+            };
+
+            if (fdb.ShowDialog() != DialogResult.OK)
+                return;
+
+	        // find disc that matches the local folder
+            var driveInformation = new DriveInformation(Directory.GetDirectoryRoot(fdb.SelectedPath));
+	        var rows = DataManager.Get().Discs.Table.Select(string.Format("iswritable='1' and serialnumber = '{0}' and volumeid='{1}'",
+	            driveInformation.SerialNumber, driveInformation.VolumeName));
+
+	        if (rows.Length == 0)
+	        {
+	            MessageBox.Show(Resources.NoMatchingCatalogFound, Constants.ApplicationName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+	            return;
+	        }
+
+            // now we have the root of the catalog
+	        var row = rows.First();
+	        var disc = new Disc(row);
+            var rootDirInfo = disc.GetRootDir();
+	        var localDirectoryPath = rootDirInfo.GetLocalDirectoryPath();
+	        var importer = new RecursiveImporter(new LocalDirectory(localDirectoryPath));
+
+	        RunWithProgressDialog(state => importer.ImportPartialStructure((IProgressCallback) state, rootDirInfo, fdb.SelectedPath, disc), () => { });
+	    }
 
         private void menuItem15_Click(object sender, EventArgs e)
         {

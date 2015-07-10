@@ -1,139 +1,181 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using VaultAtlas.DataModel;
 using VaultAtlas.DataModel.FlacAtlas;
 using VaultAtlas.DataModel.ModelUI;
 using System.Data;
 using System.Threading;
 using System.Windows.Forms;
+using VaultAtlas.DataModel.sqlite;
 
 namespace VaultAtlas.FlacAtlas
 {
-
     public class RecursiveImporter
     {
-        public RecursiveImporter( IFileSystemProvider localFileProvider, DataManager manager,
-            string serialNumber, string volumeName, string discNumber)
+        public RecursiveImporter(IFileSystemDirectory rootDirectory)
         {
-            this.manager = manager;
-            this.serialNumber = serialNumber;
-            this.discNumber = discNumber;
-            this.volumeName = volumeName;
-            this.localFileProvider = localFileProvider;
+            _rootDirectory = rootDirectory;
         }
 
-        private DataManager manager;
-        private string discNumber;
-        private string volumeName;
-        private string serialNumber;
-        private IFileSystemProvider localFileProvider;
+        private readonly IFileSystemDirectory _rootDirectory;
 
-        private VaultAtlas.DataModel.ModelUI.IProgressCallback callback;
+        private IProgressCallback _callback;
 
-        private void RecursiveImport(string parentDirUid, IFileSystemDirectory dir)
+        /// <summary>
+        /// Defines the target path for importing a sparse structure. Only the hierarchy leading to this path will be imported.
+        /// </summary>
+        private string _targetPath;
+
+        private void RecursiveImport(DiscDirectoryInfo parentDir, IFileSystemDirectory sourceDir, Disc disc)
         {
-            string directoryUid = Guid.NewGuid().ToString();
-            var newRow = transact.AddRow("Directory");
-            newRow["UID"] = directoryUid;
-            newRow["Name"] = dir.Name;
-            newRow["ParentUID"] = parentDirUid;
-            newRow["DiscNumber"] = discNumber;
-            newRow.Table.Rows.Add(newRow);
+            var targetDir = parentDir == null
+                ? disc.GetRootDir()
+                : new DiscDirectoryInfo(GetOrCreateDirectoryRow(parentDir, sourceDir, disc));
+
+            var subDirAdapter = targetDir.GetSubDirAdapter();
+            var filesAdapter = targetDir.GetFilesAdapter();
 
             try
             {
-                foreach (var subdir in dir.GetSubDirectories())
+
+                foreach (var subdir in sourceDir.GetSubDirectories())
                 {
-                    this.RecursiveImport(directoryUid, subdir);
-                    if (this.callback.IsAborting)
+                    // support sparse structure
+                    if (_targetPath != null && !_targetPath.StartsWith(subdir.GetLocalDirectoryPath()))
                     {
-                        return;
+                        continue;
                     }
+
+                    RecursiveImport(targetDir, subdir, disc);
                 }
 
-                foreach (var file in dir.GetFiles())
+                foreach (var file in sourceDir.GetFiles())
                 {
-                    var fileName = file.Name;
-                    callback.SetText(fileName);
-
-                    var size = file.Size;
-
-                    var content = file.GetFileContent();
-
-                    var newFileInfo = transact.AddRow("FileInfo");
-                    newFileInfo["Directory"] = directoryUid;
-                    newFileInfo["Name"] = fileName;
-                    newFileInfo["Size"] = size;
-                    newFileInfo["Length"] = file.GetLengthSeconds();
-                    newFileInfo["DateLastModified"] = file.LastModifiedDate;
-                    newFileInfo["UID"] = Guid.NewGuid().ToString();
-                    newFileInfo["Content"] = content;
-                    newFileInfo.Table.Rows.Add(newFileInfo);
-
-                    if (callback.IsAborting)
-                    {
-                        return;
-                    }
+                    ImportFile(file, filesAdapter, targetDir.UID);
                 }
+
+                subDirAdapter.Update();
+                filesAdapter.Update();
             }
             catch
             {
             }
         }
 
-        private AddRowsTransaction transact;
-
-        public void DoImport(object status)
+        private DataRow GetOrCreateDirectoryRow(DiscDirectoryInfo parentDir, IFileSystemDirectory dir, Disc disc)
         {
-            var callback = status as IProgressCallback;
-            this.callback = callback;
+            var parentDirAdapter = parentDir.GetSubDirAdapter();
+            var existingRows = parentDirAdapter.Table.Select("Name = '" + Util.MakeSelectSafe(dir.Name) + "'");
+            if (existingRows.Length > 0)
+                return existingRows[0];
 
-            using (this.transact =new AddRowsTransaction(this.manager ))
+            var newRow = parentDirAdapter.Table.NewRow();
+            newRow["UID"] = Guid.NewGuid().ToString();
+            newRow["Name"] = dir.Name;
+            newRow["ParentUID"] = parentDir.UID;
+            newRow["DiscNumber"] = disc.DiscNumber;
+            newRow.Table.Rows.Add(newRow);
+            return newRow;
+        }
+
+        private void ImportFile(IFileSystemFile file, AdapterBase filesAdapter, string directoryUid)
+        {
+            var fileName = file.Name;
+            _callback.SetText(fileName);
+
+            var newFileInfo = GetOrCreateFileRow(filesAdapter, fileName);
+
+            var size = file.Size;
+
+            if (size <= 10000)
             {
-                try
+                var content = file.GetFileContent();
+                newFileInfo["Content"] = content;
+            }
+
+            newFileInfo["Directory"] = directoryUid;
+            newFileInfo["Size"] = size;
+            newFileInfo["Length"] = file.GetLengthSeconds();
+            newFileInfo["DateLastModified"] = file.LastModifiedDate.ToString(System.Globalization.CultureInfo.InvariantCulture.DateTimeFormat);
+        }
+
+        private static DataRow GetOrCreateFileRow(AdapterBase filesAdapter, string fileName)
+        {
+            var existingRows = filesAdapter.Table.Select("Name = '" + Util.MakeSelectSafe(fileName) + "'");
+            if (existingRows.Length > 0)
+                return existingRows[0];
+
+            var newFileInfo = filesAdapter.Table.NewRow();
+            newFileInfo["Name"] = fileName;
+            newFileInfo["UID"] = Guid.NewGuid().ToString();
+            newFileInfo.Table.Rows.Add(newFileInfo);
+            return newFileInfo;
+        }
+
+        public void ImportDisc(IProgressCallback status, string discNumber, string volumeName, string serialNumber)
+        {
+            try
+            {
+                var presentBySerialNumber = DataManager.Get().Discs.Table.Select("SerialNumber = '" + DataManager.SafeSelect(serialNumber) + "'");
+                if (presentBySerialNumber.Length > 0)
                 {
-                    DataRow[] presentBySerialNumber = this.manager.Discs.Table.Select("SerialNumber = '" +
-                        DataManager.SafeSelect(this.serialNumber) + "'");
-                    if (presentBySerialNumber.Length > 0)
+                    var result = MessageBox.Show(string.Format(resources.AskAlreadyPresentVolumeIDOverwrite, presentBySerialNumber[0]["DiscNumber"], serialNumber),
+                        Constants.ApplicationName, MessageBoxButtons.YesNoCancel);
+
+                    if (result == DialogResult.Cancel)
+                        return;
+
+                    if (result == DialogResult.Yes)
                     {
-                        var result = MessageBox.Show(string.Format(resources.AskAlreadyPresentVolumeIDOverwrite, presentBySerialNumber[0]["DiscNumber"], serialNumber),
-                            "FlacAtlas", MessageBoxButtons.YesNoCancel);
-
-                        if (result == DialogResult.Cancel)
-                            return;
-
-                        if (result == DialogResult.Yes)
-                        {
-                            discNumber = presentBySerialNumber[0]["DiscNumber"].ToString();
-                            // TODO QUANTUM this.manager.DeleteRecursive(this.manager.RootName + this.discNumber, false);
-                        }
+                        discNumber = presentBySerialNumber[0]["DiscNumber"].ToString();
+                        // TODO QUANTUM this.manager.DeleteRecursive(this.manager.RootName + this.discNumber, false);
                     }
-
-
-                    var newRow = transact.AddRow("Disc");
-                    newRow["DiscNumber"] = discNumber;
-                    newRow["VolumeID"] = volumeName;
-                    newRow["SerialNumber"] = serialNumber;
-                    newRow.Table.Rows.Add(newRow);
-
-                    RecursiveImport( null, localFileProvider.GetRootDirectory());
-
-                    new Disc(newRow).GetRootDir().UpdateFullPath();
                 }
-                catch (ThreadAbortException)
-                {
-                    // We want to exit gracefully here (if we're lucky)
-                }
-                catch (ThreadInterruptedException)
-                {
-                    // And here, if we can
-                }
-                finally
-                {
-                    if (this.callback.IsAborting)
-                        transact.Abort();
 
-                    if (callback != null)
-                        callback.End();
-                }
+
+                var newRow = DataManager.Get().Discs.Table.NewRow();
+                newRow["DiscNumber"] = discNumber;
+                newRow["VolumeID"] = volumeName;
+                newRow["SerialNumber"] = serialNumber;
+                newRow.Table.Rows.Add(newRow);
+                var newDisc = new Disc(newRow);
+                var rootDir = newDisc.GetRootDir();
+                RecursiveImport(rootDir, _rootDirectory, newDisc);
+                rootDir.GetSubDirAdapter().Update();
+
+                rootDir.UpdateFullPath();
+            }
+            catch (ThreadAbortException)
+            {
+                // We want to exit gracefully here (if we're lucky)
+            }
+            catch (ThreadInterruptedException)
+            {
+                // And here, if we can
+            }
+            finally
+            {
+                if (_callback != null)
+                    _callback.End();
+            }
+        }
+
+        public void ImportPartialStructure(IProgressCallback status, DiscDirectoryInfo rootDir, string targetPath, Disc targetDisc)
+        {
+            try
+            {
+                _targetPath = targetPath;
+                _callback = status;
+                RecursiveImport(null, _rootDirectory, targetDisc);
+                rootDir.GetSubDirAdapter().Update();
+
+                rootDir.UpdateFullPath();
+            }
+            finally
+            {
+                if (_callback != null)
+                    _callback.End();
             }
         }
     }

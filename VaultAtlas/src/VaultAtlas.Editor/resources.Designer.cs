@@ -163,15 +163,6 @@ namespace VaultAtlas {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Imported volumes.
-        /// </summary>
-        internal static string FlacAtlasRootName {
-            get {
-                return ResourceManager.GetString("FlacAtlasRootName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Information.
         /// </summary>
         internal static string Information {
@@ -249,6 +240,15 @@ namespace VaultAtlas {
         internal static string SearchReachedEnd {
             get {
                 return ResourceManager.GetString("SearchReachedEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select a folder to import..
+        /// </summary>
+        internal static string SelectFolder {
+            get {
+                return ResourceManager.GetString("SelectFolder", resourceCulture);
             }
         }
         

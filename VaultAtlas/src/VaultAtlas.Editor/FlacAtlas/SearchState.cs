@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Windows.Forms;
 using System.Data;
+using VaultAtlas.DataModel;
 
 namespace VaultAtlas.FlacAtlas
 {
@@ -60,8 +61,8 @@ namespace VaultAtlas.FlacAtlas
                 rowCursor = _view.Count == 0 ? 0 : (rowCursor + 1) % _view.Count;
                 if (rowCursor == 0)
                 {
-                    if (!this.Silent &&
-                        MessageBox.Show(resources.SearchReachedEnd, "FlacAtlas",
+                    if (!Silent &&
+                        MessageBox.Show(resources.SearchReachedEnd, Constants.ApplicationName,
                         MessageBoxButtons.YesNo, MessageBoxIcon.Question,
                         MessageBoxDefaultButton.Button1) != DialogResult.Yes)
                     {
@@ -71,8 +72,8 @@ namespace VaultAtlas.FlacAtlas
 
                 if (rowCursor == beginRow)
                 {
-                    if (!this.Silent)
-                        MessageBox.Show(resources.NoFurtherOccurrences, "FlacAtlas",
+                    if (!Silent)
+                        MessageBox.Show(resources.NoFurtherOccurrences, Constants.ApplicationName,
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return false;
                 }

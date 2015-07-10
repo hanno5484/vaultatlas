@@ -57,6 +57,8 @@ namespace VaultAtlas
         private TabPage tabPage2;
         private SearchControl searchControl1;
         private MenuItem menuImportDisc;
+        private MenuItem menuItemImportHardDrive;
+        private MenuItem menuItem2;
         private System.Windows.Forms.MainMenu mainMenu1;
 	
 		public IList<Show> RecentlyEdited 
@@ -114,6 +116,8 @@ namespace VaultAtlas
             this.menuItem28 = new System.Windows.Forms.MenuItem();
             this.menuItem9 = new System.Windows.Forms.MenuItem();
             this.menuItem23 = new System.Windows.Forms.MenuItem();
+            this.menuImportDisc = new System.Windows.Forms.MenuItem();
+            this.menuItemImportHardDrive = new System.Windows.Forms.MenuItem();
             this.menuItem10 = new System.Windows.Forms.MenuItem();
             this.menuItem19 = new System.Windows.Forms.MenuItem();
             this.menuItem41 = new System.Windows.Forms.MenuItem();
@@ -128,7 +132,7 @@ namespace VaultAtlas
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.searchControl1 = new VaultAtlas.UI.SearchControl();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.menuImportDisc = new System.Windows.Forms.MenuItem();
+            this.menuItem2 = new System.Windows.Forms.MenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.statusBarPanel1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.statusBarPanelContent)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.statusBarPanelLineNumber)).BeginInit();
@@ -202,7 +206,9 @@ namespace VaultAtlas
             this.menuItem28,
             this.menuItem9,
             this.menuItem23,
-            this.menuImportDisc});
+            this.menuImportDisc,
+            this.menuItemImportHardDrive,
+            this.menuItem2});
             resources.ApplyResources(this.menuItem24, "menuItem24");
             // 
             // MenuItem_RecentlyEdited
@@ -227,6 +233,18 @@ namespace VaultAtlas
             this.menuItem23.Index = 3;
             resources.ApplyResources(this.menuItem23, "menuItem23");
             this.menuItem23.Click += new System.EventHandler(this.menuItem23_Click);
+            // 
+            // menuImportDisc
+            // 
+            this.menuImportDisc.Index = 4;
+            resources.ApplyResources(this.menuImportDisc, "menuImportDisc");
+            this.menuImportDisc.Click += new System.EventHandler(this.menuImportDisc_Click);
+            // 
+            // menuItemImportHardDrive
+            // 
+            this.menuItemImportHardDrive.Index = 5;
+            resources.ApplyResources(this.menuItemImportHardDrive, "menuItemImportHardDrive");
+            this.menuItemImportHardDrive.Click += new System.EventHandler(this.menuItemImportHardDrive_Click);
             // 
             // menuItem10
             // 
@@ -331,9 +349,9 @@ namespace VaultAtlas
             // 
             // menuItem2
             // 
-            this.menuImportDisc.Index = 4;
-            resources.ApplyResources(this.menuImportDisc, "menuImportDisc");
-            this.menuImportDisc.Click += new System.EventHandler(this.menuImportDisc_Click);
+            this.menuItem2.Index = 6;
+            resources.ApplyResources(this.menuItem2, "menuItem2");
+            this.menuItem2.Click += new System.EventHandler(this.menuItem2_Click);
             // 
             // MainForm
             // 
@@ -577,78 +595,7 @@ namespace VaultAtlas
 
         private void menuMatchFlacAtlas_Click(object sender, EventArgs e)
         {
-            var data = new DataSet("VaultAtlas");
-            data.Tables.Add("FileInfo");
-
-            var da = new SQLiteDataAdapter("select * from FileInfo where content is not null and name like '%.txt' and not(name like '%ffp%')", Model.SingleModel.Conn);
-            var dt = data.Tables["FileInfo"];
-            da.FillSchema(dt, SchemaType.Source);
-            da.Fill(dt);
-
-            var fileContents = new Dictionary<string, DiscFileInfo>();
-
-            foreach (DataRow row in dt.Rows)
-            {
-                var s = System.Text.Encoding.UTF8.GetString((byte[])row["Content"]).Replace("\r", "").Replace("\n", "").Replace(" ", "").ToLower();
-                if (s.Length > 170)
-                    s = s.Substring(100, 30);
-                else if (s.Length > 100)
-                    s = s.Substring(30, 30);
-                else if (s.Length > 30)
-                    s = s.Substring(0, 30);
-
-                fileContents[s] = new DiscFileInfo(row);
-            }
-
-            int treffer = 0;
-            int gesucht = 0;
-
-            foreach (var show in Model.SingleModel.Shows.Table.Rows.Cast<DataRow>().Select(r => new Show(r)))
-            {
-                if (!string.IsNullOrEmpty(show.Loc))
-                    continue;
-                try
-                {
-                    var resources = show.GetResources();
-                    if (!resources.Any())
-                        continue;
-                    string str = resources.First().Value.ToString().Replace("\r", "").Replace("\n", "").Replace(" ", "").ToLower();
-                    if (string.IsNullOrEmpty(str))
-                        continue;
-
-
-                    Model.SingleModel.Conn.Open();
-                    gesucht++;
-                    try
-                    {
-                        foreach (var key in fileContents.Keys)
-                        {
-                            if (key.Length < 15)
-                                continue;
-
-                            if (str.IndexOf(key) != -1)
-                            {
-                                treffer++;
-
-                                var uidDirectory = fileContents[key].UidDirectory;
-
-                                var cmd = new SQLiteCommand("select name from directory where uid='" + uidDirectory + "'", Model.SingleModel.Conn);
-                                var name = cmd.ExecuteScalar().ToString();
-
-                                Debug.WriteLine(show.Display + " -> " + (string.IsNullOrEmpty(name) ? uidDirectory : name));
-                                break;
-                            }
-                        }
-                    }
-                    finally
-                    {
-                        Model.SingleModel.Conn.Close();
-                    }
-                }
-                catch
-                {
-                }
-            }
+            new ShowDirectoryMatcher().Match();
         }
 
 	    public Model Model
@@ -659,6 +606,16 @@ namespace VaultAtlas
         private void menuImportDisc_Click(object sender, EventArgs e)
         {
             flacAtlasControl1.ImportDisc();
+        }
+
+        private void menuItemImportHardDrive_Click(object sender, EventArgs e)
+        {
+            flacAtlasControl1.ImportHardDrive();
+        }
+
+        private void menuItem2_Click(object sender, EventArgs e)
+        {
+            flacAtlasControl1.ImportLocalFolderStructure();
         }
 	}
 }

@@ -126,7 +126,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.ico" />
-    <EmbeddedResource Include="resources.de.resx" />
+    <EmbeddedResource Include="FlacAtlas\MatchingResultViewer.resx">
+      <DependentUpon>MatchingResultViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources.de.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\close.png" />
     <EmbeddedResource Include="Resources\database_large.png" />
     <EmbeddedResource Include="Resources\database.png" />
@@ -146,7 +151,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="FlacAtlas\AddRowsTransaction.cs" />
-    <Compile Include="FlacAtlas\DriveInformation.cs" />
     <Compile Include="FlacAtlas\ExcelExporter.cs" />
     <Compile Include="FlacAtlas\FileContentDialog.cs">
       <SubType>UserControl</SubType>
@@ -165,6 +169,12 @@
     <Compile Include="FlacAtlas\FlacAtlasControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="FlacAtlas\MatchingResultViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FlacAtlas\MatchingResultViewer.Designer.cs">
+      <DependentUpon>MatchingResultViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="FlacAtlas\SearchState.cs" />
     <Compile Include="FlacAtlas\SettingsDialog.cs">
       <SubType>Form</SubType>
@@ -172,6 +182,7 @@
     <Compile Include="FlacAtlas\SettingsDialog.Designer.cs">
       <DependentUpon>SettingsDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="FlacAtlas\ShowDirectoryMatcher.cs" />
     <Compile Include="FlacAtlas\VolumeImporter.cs" />
     <Compile Include="FlacAtlas\VolumeImporterDialog.cs">
       <SubType>Form</SubType>
@@ -184,6 +195,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="UI\PathHelper.cs" />
     <Compile Include="UI\SearchControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -359,6 +371,7 @@
     <EmbeddedResource Include="resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Controls\DataExplorer.resx">
       <DependentUpon>DataExplorer.cs</DependentUpon>

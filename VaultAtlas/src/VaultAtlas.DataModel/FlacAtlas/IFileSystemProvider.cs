@@ -20,6 +20,8 @@ namespace VaultAtlas.FlacAtlas
         IEnumerable<IFileSystemFile> GetFiles();
 
         string Name { get; }
+
+        string GetLocalDirectoryPath();
     }
 
     public interface IFileSystemFile

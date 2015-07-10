@@ -148,12 +148,6 @@
   <data name="FileNotFound" xml:space="preserve">
     <value>The file could not be found.</value>
   </data>
-  <data name="FlacAtlasRootName" xml:space="preserve">
-    <value>Imported volumes</value>
-  </data>
-  <data name="Information" xml:space="preserve">
-    <value>Information</value>
-  </data>
   <data name="MustEnterArtistBeforeEnterShow" xml:space="preserve">
     <value>You must enter an artist before this show can be entered.</value>
   </data>
@@ -195,5 +189,11 @@
   </data>
   <data name="NoDrivesAvailable" xml:space="preserve">
     <value>No drives found.</value>
+  </data>
+  <data name="SelectFolder" xml:space="preserve">
+    <value>Select a folder to import.</value>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Information</value>
   </data>
 </root>

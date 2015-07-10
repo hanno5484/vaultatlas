@@ -79,6 +79,15 @@ namespace VaultAtlas.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No matching catalog found..
+        /// </summary>
+        internal static string NoMatchingCatalogFound {
+            get {
+                return ResourceManager.GetString("NoMatchingCatalogFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save file.
         /// </summary>
         internal static string SaveFile {

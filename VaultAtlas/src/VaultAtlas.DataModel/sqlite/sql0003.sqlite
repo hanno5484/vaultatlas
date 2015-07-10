@@ -1,0 +1,3 @@
+﻿/* store local folder for a disc with IsWritable set */
+/* this column stores the relative path, e.g. "\catalog" */
+alter table Disc Add Column 'PathOnVolume' TEXT;

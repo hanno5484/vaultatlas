@@ -7,6 +7,7 @@
   5. FlacAtlas/VaultAtlas Matching, anhand von MD5 oder SHN-IDs zum Beispiel
      Datenmodell überlegen: show has folder, last seen folder?
   6. Datenmodell für local folder
+  7. refresh eines lokalen Katalogs
 
 - excel / xslt exporte sollten auf ispublic = false filtern.
 - needreplacement rausnehmen bei export?

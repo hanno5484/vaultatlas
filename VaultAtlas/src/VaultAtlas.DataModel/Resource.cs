@@ -33,9 +33,9 @@ namespace VaultAtlas.DataModel
             set { Row["Key"] = value; }
         }
 
-        public object Value
+        public string Value
         {
-            get { return Row["Value"] as string; }
+            get { return Row.Field<string>("Value"); }
             set { Row["Value"] = value; }
         }
 	}

@@ -16,7 +16,7 @@ namespace VaultAtlas.DataModel.sqlite
         }
 
         private readonly SQLiteConnection _conn;
-        private const int MigVersion = 2;
+        private const int MigVersion = 3;
 
         internal void Migrate()
         {

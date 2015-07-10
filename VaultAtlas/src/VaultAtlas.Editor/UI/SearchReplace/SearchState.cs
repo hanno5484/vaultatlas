@@ -104,11 +104,10 @@ namespace VaultAtlas.UI.SearchReplace
 					// search resources for this show if needed
 					if ( this.SearchResources )
 						foreach( Resource res in view.GetShow( rowCursor ).GetResources())
-							if ( res.Value is string )
-							{
-								if ( (ignoreCase ? res.Value.ToString().ToUpper() : res.Value.ToString()).IndexOf( searchString ) != -1)
-									return true;
-							}
+						{
+						    if ( (ignoreCase ? res.Value.ToUpper() : res.Value).IndexOf( searchString ) != -1)
+						        return true;
+						}
 				}
 				
 				if (columnCursor == beginColumn && rowCursor == beginRow) 

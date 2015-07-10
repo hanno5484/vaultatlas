@@ -126,4 +126,7 @@
   <data name="KeyTextFile" xml:space="preserve">
     <value>Text file</value>
   </data>
+  <data name="NoMatchingCatalogFound" xml:space="preserve">
+    <value>No matching catalog found.</value>
+  </data>
 </root>

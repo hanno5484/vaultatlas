@@ -130,6 +130,9 @@
     <Compile Include="FlacAtlas\DiscDirectoryInfo.cs" />
     <Compile Include="FlacAtlas\Disc.cs" />
     <Compile Include="FlacAtlas\DiscFileInfo.cs" />
+    <Compile Include="FlacAtlas\DriveInformation.cs" />
+    <Compile Include="FlacAtlas\LocalDirectory.cs" />
+    <Compile Include="FlacAtlas\LocalFileInfo.cs" />
     <Compile Include="FlacAtlas\MediaFormatInfo.cs" />
     <Compile Include="Formatters.cs" />
     <Compile Include="sqlite\ArtistsAdapter.cs">
@@ -281,6 +284,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="sqlite\sql0002.sqlite" />
+    <EmbeddedResource Include="sqlite\sql0003.sqlite" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\delete.png" />

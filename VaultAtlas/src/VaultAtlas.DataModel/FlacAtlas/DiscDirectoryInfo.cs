@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,9 +58,37 @@ namespace VaultAtlas.DataModel.FlacAtlas
             return _subDirs;
         }
 
+
+        public DiscDirectoryInfo ParentDirectory
+        {
+            get
+            {
+                var parentUid = ParentUid;
+                if (string.IsNullOrEmpty(parentUid))
+                    return null;
+
+                var data = new DataSet(Constants.ApplicationName);
+
+                var dt = data.Tables.Add("Directory");
+
+                var da = new SQLiteDataAdapter("select * from Directory where UID = @Directory", Model.SingleModel.Conn);
+                da.SelectCommand.Parameters.Add("Directory", DbType.String).Value = ParentUid;
+
+                da.FillSchema(dt, SchemaType.Source);
+                da.Fill(dt);
+
+                return new DiscDirectoryInfo(dt.Rows[0]);
+            }
+        }
+
         public string UID
         {
             get { return Row.Field<string>("UID"); }
+        }
+
+        public string ParentUid
+        {
+            get { return Row.Field<string>("ParentUID"); }
         }
 
         public string Name
@@ -79,7 +108,7 @@ namespace VaultAtlas.DataModel.FlacAtlas
 
         public bool IsNotRead
         {
-            get { return Row.Field<long>("IsNotRead") != 0; }
+            get { return 1 == Row.Field<long?>("IsNotRead"); }
         }
 
         public string GetNodeCaption()
@@ -132,5 +161,39 @@ namespace VaultAtlas.DataModel.FlacAtlas
                 subDir.UpdateFullPath();
             }
         }
+
+        public string DiscNumber
+        {
+            get { return Row.Field<string>("DiscNumber"); }
+        }
+
+        public string GetLocalDirectoryPath()
+        {
+            // try to find the local directory for this folder
+
+            var parentDir = ParentDirectory;
+            if (parentDir != null)
+            {
+                var parentPath = parentDir.GetLocalDirectoryPath();
+                if (parentPath == null)
+                    return null;
+
+                return Path.Combine(parentPath, Name);
+            }
+
+            var disc = Disc;
+
+            if (!disc.IsWritable)
+                return null;
+
+            return disc.GetLocalDirectoryPath();
+        }
+
+        private Disc Disc
+        {
+            get { return new Disc(DataManager.Get().Discs.Table.Rows.Find(DiscNumber)); }
+        }
+
+
     }
 }

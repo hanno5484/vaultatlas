@@ -323,7 +323,7 @@ namespace VaultAtlas.UI
                             panel1.Controls.Clear();
                             panel1.Controls.Add(browser);
                         }
-                        browser.Navigate(res.Value.ToString(), null);
+                        browser.Navigate(res.Value, null);
                         break;
 					}
 
@@ -338,7 +338,7 @@ namespace VaultAtlas.UI
                             textEd.Dock = DockStyle.Fill;
                         }
 
-                        textEd.Value = res.Value.ToString();
+                        textEd.Value = res.Value;
 						
 						break;
 					}
