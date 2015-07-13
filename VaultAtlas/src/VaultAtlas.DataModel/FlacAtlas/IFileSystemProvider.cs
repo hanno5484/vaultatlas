@@ -30,7 +30,7 @@ namespace VaultAtlas.FlacAtlas
 
         long Size { get; }
 
-        byte[] GetFileContent();
+        byte[] FileContent { get; }
 
         long GetLengthSeconds();
 

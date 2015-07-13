@@ -13,11 +13,13 @@ namespace VaultAtlas.DataModel.FlacAtlas
         public long Size
         {
             get { return Row.Field<long>("Size"); }
+            set { Row.SetField("Size", value); }
         }
 
-        public byte[] GetFileContent()
+        public byte[] FileContent
         {
-            return Row.Field<byte[]>("Content");
+            get { return Row.Field<byte[]>("Content"); }
+            set { Row.SetField("Content", value); }
         }
 
         public long GetLengthSeconds()
@@ -45,6 +47,7 @@ namespace VaultAtlas.DataModel.FlacAtlas
         public string UidDirectory
         {
             get { return Row.Field<string>("Directory"); }
+            set { Row.SetField("Directory", value); }
         }
 
         public long Length
@@ -89,6 +92,10 @@ namespace VaultAtlas.DataModel.FlacAtlas
             {
                 var s = (string)Row["DateLastModified"];
                 return DateTime.ParseExact(s, "s", System.Globalization.CultureInfo.InvariantCulture.DateTimeFormat);
+            }
+            set
+            {
+                Row["DateLastModified"] = value.ToString("s", System.Globalization.CultureInfo.InvariantCulture.DateTimeFormat);
             }
         }
     }

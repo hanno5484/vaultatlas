@@ -76,7 +76,7 @@ namespace VaultAtlas.FlacAtlas
 
 	        if (!isMultiSelect)
 	        {
-	            fileContentDialog1.Content = firstFile.GetFileContent();
+	            fileContentDialog1.Content = firstFile.FileContent;
 	        }
 	    }
 

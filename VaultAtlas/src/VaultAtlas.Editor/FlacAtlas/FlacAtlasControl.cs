@@ -373,7 +373,7 @@ namespace VaultAtlas.FlacAtlas
 
                 if (file != null)
                 {
-                    fileContentDialog1.Content = file.GetFileContent();
+                    fileContentDialog1.Content = file.FileContent;
                     hasFileContent = true;
                 }
             }
@@ -469,7 +469,7 @@ namespace VaultAtlas.FlacAtlas
             
         }
 
-	    private IProgressCallback GetProgressDialog()
+	    public IProgressCallback GetProgressDialog()
 	    {
 	        var p = new ProgressWindow
 	        {
@@ -568,10 +568,12 @@ namespace VaultAtlas.FlacAtlas
             if (fdb.ShowDialog() != DialogResult.OK)
                 return;
 
-	        await ImportLocalFolderStructure(fdb.SelectedPath).ConfigureAwait(false);
+            var progressCallback = GetProgressDialog();
+
+	        await ImportLocalFolderStructure(fdb.SelectedPath, progressCallback).ConfigureAwait(false);
 	    }
 
-	    public async Task<DiscDirectoryInfo> ImportLocalFolderStructure(string path)
+	    public async Task<DiscDirectoryInfo> ImportLocalFolderStructure(string path, IProgressCallback progressCallback)
 	    {
             // find disc that matches the local folder
 	        var driveInformation = new DriveInformation(Directory.GetDirectoryRoot(path));
@@ -590,8 +592,6 @@ namespace VaultAtlas.FlacAtlas
 	        var rootDirInfo = disc.GetRootDir();
 	        var localDirectoryPath = rootDirInfo.GetLocalDirectoryPath();
 	        var importer = new RecursiveImporter(new LocalDirectory(localDirectoryPath));
-
-	        var progressCallback = GetProgressDialog();
 
 	        return await importer.ImportPartialStructure(progressCallback, rootDirInfo, path, disc).ConfigureAwait(false);
 	    }

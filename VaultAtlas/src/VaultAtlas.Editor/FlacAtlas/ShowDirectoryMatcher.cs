@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -135,7 +134,7 @@ namespace VaultAtlas.FlacAtlas
                         var fi = new LocalFileInfo(f);
                         if (fi.Size >= 10000)
                             continue;
-                        var s = GetMd5String(GetCanonicalString(Encoding.UTF8.GetString(fi.GetFileContent())));
+                        var s = GetMd5String(GetCanonicalString(Encoding.UTF8.GetString(fi.FileContent)));
                         if (targetDict.ContainsKey(s))
                         {
                             result[localPath] = new Show(Model.SingleModel.Shows.Table.Rows.Find(targetDict[s].UidShow));

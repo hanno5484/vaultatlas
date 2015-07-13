@@ -595,9 +595,14 @@ namespace VaultAtlas
 
         private void menuMatchFlacAtlas_Click(object sender, EventArgs e)
         {
+            IProgressCallback progressCallback = null;
+
             new ShowDirectoryMatcher().Match(async (path, show) =>
             {
-                var ddi = await flacAtlasControl1.ImportLocalFolderStructure(path).ConfigureAwait(false);
+                if (progressCallback == null)
+                    progressCallback = flacAtlasControl1.GetProgressDialog();
+
+                var ddi = await flacAtlasControl1.ImportLocalFolderStructure(path, progressCallback).ConfigureAwait(false);
                 show.UidDirectory = ddi.UID;
             });
 

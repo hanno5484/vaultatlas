@@ -23,13 +23,16 @@ namespace VaultAtlas.DataModel
             get { return new FileInfo(_fileName).Length; }
         }
 
-        public byte[] GetFileContent()
+        public byte[] FileContent
         {
-            using (var sr = new FileStream(_fileName, FileMode.Open))
+            get
             {
-                var buff = new byte[sr.Length];
-                sr.Read(buff, 0, (int)sr.Length);
-                return buff;
+                using (var sr = new FileStream(_fileName, FileMode.Open))
+                {
+                    var buff = new byte[sr.Length];
+                    sr.Read(buff, 0, (int) sr.Length);
+                    return buff;
+                }
             }
         }
 

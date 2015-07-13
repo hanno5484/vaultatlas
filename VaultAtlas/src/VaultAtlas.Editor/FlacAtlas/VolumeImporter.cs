@@ -72,7 +72,7 @@ namespace VaultAtlas.FlacAtlas
             }
         }
 
-        private DataRow GetOrCreateDirectoryRow(DiscDirectoryInfo parentDir, IFileSystemDirectory dir, Disc disc)
+        private static DataRow GetOrCreateDirectoryRow(DiscDirectoryInfo parentDir, IFileSystemDirectory dir, Disc disc)
         {
             var parentDirAdapter = parentDir.GetSubDirAdapter();
             var existingRows = parentDirAdapter.Table.Select("Name = '" + Util.MakeSelectSafe(dir.Name) + "'");
@@ -93,33 +93,29 @@ namespace VaultAtlas.FlacAtlas
             var fileName = file.Name;
             _callback.SetText(fileName);
 
-            var newFileInfo = GetOrCreateFileRow(filesAdapter, fileName);
+            var newFileInfo = new DiscFileInfo(GetOrCreateFileRow(filesAdapter, fileName));
 
             var size = file.Size;
 
             if (size <= 10000)
             {
-                var content = file.GetFileContent();
-                newFileInfo["Content"] = content;
+                newFileInfo.FileContent = file.FileContent;
             }
 
-            newFileInfo["Directory"] = directoryUid;
-            newFileInfo["Size"] = size;
-            newFileInfo["DateLastModified"] = file.LastModifiedDate.ToString("s", System.Globalization.CultureInfo.InvariantCulture.DateTimeFormat);
+            newFileInfo.UidDirectory = directoryUid;
+            newFileInfo.Size = size;
+            newFileInfo.LastModifiedDate = file.LastModifiedDate;
 
             var mediaprovider = MediaFileInfoProvider.GetMetaInfoProvider(file.Name);
             if (mediaprovider != null)
             {
                 var formatInfo = mediaprovider.GetMediaFormatInfo(file.Name);
-                new DiscFileInfo(newFileInfo)
-                {
-                    BitRate = formatInfo.BitRate,
-                    SampleRate = formatInfo.SampleRate,
-                    Bps = formatInfo.BitsPerSample,
-                    NrChannels = formatInfo.NumberChannels,
-                    FormatIdentifier = formatInfo.FormatIdentifier,
-                    Length = formatInfo.LengthSeconds
-                };
+                newFileInfo.BitRate = formatInfo.BitRate;
+                newFileInfo.SampleRate = formatInfo.SampleRate;
+                newFileInfo.Bps = formatInfo.BitsPerSample;
+                newFileInfo.NrChannels = formatInfo.NumberChannels;
+                newFileInfo.FormatIdentifier = formatInfo.FormatIdentifier;
+                newFileInfo.Length = formatInfo.LengthSeconds;
             }
         }
 

@@ -3,12 +3,11 @@
   1. Shows löschen
   2. Suchfunktion (SearchControl)
   3. wenn unter den shows weitergeschaltet wird über die pfeiltasten, dann wird nicht gespeichert
-  4. Migrationsfunktionalität: MediaFormatInfo-Spalten ergänzen
   5. FlacAtlas/VaultAtlas Matching, anhand von MD5 oder SHN-IDs zum Beispiel
      Datenmodell überlegen: show has folder, last seen folder?
   6. Datenmodell für local folder
   7. refresh eines lokalen Katalogs
-  8. Aktuelles Problem: VolumeImporter öffnet mehrere dialogfenster/parallel in mehreren Connections
+  8. Aktuelles Problem: VolumeImporter scheint parallel in mehreren Threads auf die Connection zuzugreifen
 
 - excel / xslt exporte sollten auf ispublic = false filtern.
 - needreplacement rausnehmen bei export?
