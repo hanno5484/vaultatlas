@@ -516,6 +516,7 @@ namespace VaultAtlas
                 var es = new EditShow();
 				es.Bind( showIndex, show);
                 tabPage.Controls.Add(es);
+                tabPage.Text = es.Text;
                 es.Dock = DockStyle.Fill;
                 tabPage.Tag = es;
                 tabPage.ImageIndex = 1;
