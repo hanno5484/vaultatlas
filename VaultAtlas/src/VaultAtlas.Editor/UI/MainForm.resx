@@ -129,7 +129,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="statusBar1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, -15</value>
+    <value>0, 416</value>
   </data>
   <data name="statusBarPanel1.Name" xml:space="preserve">
     <value>statusBarPanel1</value>
@@ -174,17 +174,14 @@
   <data name="&gt;&gt;statusBar1.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <data name="menuItem1.Text" xml:space="preserve">
-    <value>&amp;File</value>
-  </data>
   <data name="menuExit.Shortcut" type="System.Windows.Forms.Shortcut, System.Windows.Forms">
     <value>AltF4</value>
   </data>
   <data name="menuExit.Text" xml:space="preserve">
     <value>&amp;Exit</value>
   </data>
-  <data name="menuItem8.Text" xml:space="preserve">
-    <value>&amp;Edit</value>
+  <data name="menuItem1.Text" xml:space="preserve">
+    <value>&amp;File</value>
   </data>
   <data name="menuItem21.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -204,8 +201,8 @@
   <data name="menuItem22.Text" xml:space="preserve">
     <value>Redo</value>
   </data>
-  <data name="menuItem24.Text" xml:space="preserve">
-    <value>Data</value>
+  <data name="menuItem8.Text" xml:space="preserve">
+    <value>&amp;Edit</value>
   </data>
   <data name="MenuItem_RecentlyEdited.Text" xml:space="preserve">
     <value>Recently &amp;edited</value>
@@ -234,8 +231,8 @@
   <data name="menuItem2.Text" xml:space="preserve">
     <value>Import new folder</value>
   </data>
-  <data name="menuItem10.Text" xml:space="preserve">
-    <value>&amp;Tools</value>
+  <data name="menuItem24.Text" xml:space="preserve">
+    <value>Data</value>
   </data>
   <data name="menuItem19.Text" xml:space="preserve">
     <value>&amp;Export  ...</value>
@@ -249,11 +246,26 @@
   <data name="menuMatchFlacAtlas.Text" xml:space="preserve">
     <value>Match FlacAtlas entries</value>
   </data>
+  <data name="menuItem10.Text" xml:space="preserve">
+    <value>&amp;Tools</value>
+  </data>
   <metadata name="mainMenu1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
   <data name="tabSearch.Appearance" type="System.Windows.Forms.TabAppearance, System.Windows.Forms">
     <value>FlatButtons</value>
+  </data>
+  <data name="dataExplorer1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="dataExplorer1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="dataExplorer1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>897, 400</value>
+  </data>
+  <data name="dataExplorer1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
   <data name="&gt;&gt;dataExplorer1.Name" xml:space="preserve">
     <value>dataExplorer1</value>
@@ -274,7 +286,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPage1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>903, 0</value>
+    <value>903, 406</value>
   </data>
   <data name="tabPage1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -293,6 +305,21 @@
   </data>
   <data name="&gt;&gt;tabPage1.ZOrder" xml:space="preserve">
     <value>0</value>
+  </data>
+  <data name="flacAtlasControl1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="flacAtlasControl1.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 8.25pt</value>
+  </data>
+  <data name="flacAtlasControl1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="flacAtlasControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>897, 0</value>
+  </data>
+  <data name="flacAtlasControl1.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
   </data>
   <data name="&gt;&gt;flacAtlasControl1.Name" xml:space="preserve">
     <value>flacAtlasControl1</value>
@@ -332,6 +359,18 @@
   </data>
   <data name="&gt;&gt;tabPageDiscs.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="searchControl1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="searchControl1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 3</value>
+  </data>
+  <data name="searchControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>897, 0</value>
+  </data>
+  <data name="searchControl1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
   <data name="&gt;&gt;searchControl1.Name" xml:space="preserve">
     <value>searchControl1</value>
@@ -385,71 +424,71 @@
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
-        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAAm
-        DQAAAk1TRnQBSQFMAgEBAwEAAaQBAQGkAQEBEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
-        AwABEAMAAQEBAAEgBgABEP8AGwABnQESAQAB/wGZAQ4BAAH/AZcBCwEAAf8BlQEJAQAB/wGSAQUBAAH/
-        AZABAwEAAf8BjAIAAf8BiwIAAf8BiAIAAf8BhwIAAf8BhgIAAf8BgwIAAf8QAAGdARIBAAH/AZkBDgEA
-        Af8BlwELAQAB/wGVAQkBAAH/AZIBBQEAAf8BkAEDAQAB/wGMAgAB/wGLAgAB/wGIAgAB/wGHAgAB/wGG
-        AgAB/wGDAgAB/yAAAwQBBgFIAkcBgwFiAlgB6QFIAkcBgwMQARVcAAGgARYBAAL/AfcB7QH/Af4B9gHn
-        Af8B/gHzAeIC/wHwAdwB/wH+Ae4B1QH/Af4B7QHQAf8DAAH/AwAB/wEqAQoBAAH/AwAB/wGEAgAB/xAA
-        AaABFgEAAv8B9wHtAf8B/gH2AecB/wH+AfMB4gL/AfAB3AH/Af4B7gHVAf8B/gHtAdAB/wH+AeoBygH/
-        Af4B5wHFAf8B/gHlAb8B/wH+AeIBuAH/AYQCAAH/HAADOwFkAVkCQgH1AfoB1wGvAf8BtgGIAUAB/wEA
-        ARYB3gH/AVwCWQHPAwQBBlgAAaQBGgEAAv8B+gHyAv8B9wHtAv8B9gHpAv8B9AHiAv8B8AHdAf8DAAH/
-        AwAB/wHXAYcBJAH/AdcBhwEkAf8BKgEKAQAB/wGIAgAB/xAAAaQBGgEAAv8B+gHyAv8B9wHtAf8BnAFD
-        AS4B/wFDARIBBQH/AZEBPwE1Af8B9gHjAcwC/wHtAdAC/wHqAcsB/wH+AecBxQH/Af4B5gHAAf8BiAIA
-        Af8UAAMqAUEBYAJZAesB9AHRAacB/wHcAaEBQgH/AakBGwEAAf8BsAEgAQAB/wGBAToBgwH/ASUBPQHt
-        Af8DUwGqWAABpwEeAQAC/wH8AfcC/wH6AfMC/wH4Ae4C/wH3AekB/wMAAf8DAAH/AdcBhwEkAf8B1wGH
-        ASQB/wHXAYcBJAH/AdcBhwEkAf8BigIAAf8QAAGnAR4BAAL/AfwB9wL/AfoB8wH/AYIBGAEAAf8BQQEE
-        AQAB/wE0AgAB/wGBAScBGwL/Ae8B1wH/Af4B7QHRAv8B6gHLAf8B/gHnAcUB/wGKAgAB/wwAAx0BKgFd
-        AlkB1wHwAcwBowH/AecBvAGRAf8BqgEgAQAB/wG8AS0BAAH/AcwBQQEAAf8BzwFHAQAB/wG1ASoBAAH/
-        ATwBMQGPAf8DTgHwAxwBJ1QAAasBIgEAAv8B/gH7Av8B/AH3Av8B+gHzAf8DAAH/AwAB/wEqAQoBAAH/
-        AwAB/wHXAYcBJAH/AdcBhwEkAf8B1wGHASQB/wGOAQEBAAH/EAABqwEiAQAC/wH+AfsC/wH8AfcB/wHX
-        AbYBmgH/AYIBFAEAAf8BRwEHAQAB/wE7AQEBAAH/AfYB5QHTAv8B7wHYAf8B/gHtAdEB/wH+AeoBzAH/
-        AY4BAQEAAf8IAAFYAlYBuwHmAb0BkQH/AfAB1wG6Af8BrwEqAQAB/wG1ASYBAAH/AcwBQAEAAf8BzgFF
-        AQAB/wHQAUoBAAH/AdEBgQEAAf8B0wGBAQAB/wGtASkBAAH/AQwBpAHFAf8DUwHxAwsBD1AAAa8BJwEA
-        Av8B/gP/Af4B+wH/AwAB/wMAAf8B1wGHASQB/wHXAYcBJAH/ASoBCgEAAf8DAAH/AdcBhwEkAf8DAAH/
-        AZEBBAEAAf8QAAGvAScBAAL/Af4D/wH+AfsC/wH7AfgB/wHzAeUB1wH/AcsBpQGIAf8BgQERAQAB/wH0
-        AeYB1QL/AfMB3gH/Ae4B3AHGAv8B7QHTAf8BkQEEAQAB/wgAAacBLgELAf8BXwFJASEB+wGtAR8BAAH/
-        AcsBPwEAAf8BzgFEAQAB/wHPAUoBAAH/AdEBgQEAAf8B0wGBAQAB/wHVAYIBAAH/AdcBiAEAAf8B1wGL
-        AQAB/wGkAScBAAH/AS4BwgHiAf8BXwJcAdRQAAGyASsBAAX/AwAB/wMAAf8B1wGHASQB/wHXAYcBJAH/
-        AdcBhwEkAf8B1wGHASQB/wEqAQoBAAH/AwAB/wMAAf8BlQEHAQAB/xAAAbIBKwEACv8B/gH8Av8B/AH4
-        Av8B+wH0Af8BkAEcAQAB/wH3AeoB3AL/AfQB5QH/AawBhgFFAv8B8AHaAf8BlQEHAQAB/wgAA1IBqQHK
-        AUkBCgH/AdQBgQEAAf8BzgFIAQAB/wHRAYEBAAH/AdMBgQEAAf8B1AGCAQAB/wHXAYcBAAH/AdgBjAEA
-        Af8B2gGRAQYB/wHcAZYBDQH/AdkBlgETAf8BigEnAQAB/wEoAX8BIwH+AzMBUkwAAbUBLwEACf8DAAH/
-        AwAB/wHXAYcBJAH/AdcBhwEkAf8B1wGHASQB/wMAAf8DAAH/Af4B8gHgAf8BlwELAQAB/xAAAbUBLwEA
-        Dv8B/gH7Av8B/AH4Af8BoQEoAQAB/wH4AesB4QH/AfoB7wHiAf8BgQEWAQAB/wH+AfIB4AH/AZcBCwEA
-        Af8MAAFeAlsB0AHVAYMBFwH/AdMBgQEAAf8B1AGBAQAB/wHVAYYBAAH/AdgBiwEAAf8B2QGQAQQB/wHc
-        AZUBDAH/Ad0BmgEVAf8B4AGfAR0B/wHhAaUBJgH/AdgBmAEjAf8BRwFIAQYB/wE9AX8BOgH+AxwBKEgA
-        AbcBMgEADf8DAAH/AwAB/wHXAYcBJAH/AwAB/wMAAv8B9wHrAf8B/gH2AeYB/wGaAQ8BAAH/EAABtwEy
-        AQAS/wL+Af8BtQExAQAB/wH6Ae8B4gH/AcQBkQE6Af8BkAEfAQAB/wH+AfYB5gH/AZoBDwEAAf8MAAMH
-        AQkDXQHtAd4BkgEhAf8B1AGGAQAB/wHZAY8BAgH/AdoBkwEKAf8B3QGZARMB/wHeAZ4BGwH/AeEBpAEk
-        Af8B4gGpAS0B/wHjAa0BNwH/AeYBtAFAAf8B0AGTASoB/wJ/AVEB/gNZAcdIAAG6ATUBABH/AwAB/wMA
-        Af8DAAL/AfsB9gL/AfoB8AL/AfgB7QH/AZ4BEwEAAf8QAAG6ATUBABX/AccBPgEAAf8BwAFDAQAB/wGn
-        ASUBAAH/AdEBpgGBAv8B+AHtAf8BngETAQAB/xAAAxQBGwJNASkB+gHmAZ4BKwH/AdkBkgEOAf8B3gGe
-        ARoB/wHgAaMBIwH/AeIBpwErAf8B4wGsATQB/wHmAbIBPgH/AecBtwFIAf8B6QG8AYEB/wHrAcIBhwH/
-        AV8BUwEqAfsDGwEmSAABvQE5AQAV/wMAA/8B/AL/Af4B+wL/AfwB9gL/AfoB8gH/AaEBFwEAAf8QAAG9
-        ATkBABX/AdwBSAEAAf8BygE7AQAB/wHhAbEBgQL/AfwB9gL/AfoB8gH/AaEBFwEAAf8UAAMkATYBfwFd
-        ATAB/gHrAaoBNwH/Ad4BoQEmAf8B4wGsATMB/wHlAbEBPQH/AecBtwFHAf8B6QG8AYEB/wHqAcEBhAH/
-        AeEBsQGBAf8BYQJcAdwDJAE2TAABwAE8AQAe/wL+Av8B/gH7Av8B/AH3Af8BpQEbAQAB/xAAAcABPAEA
-        Ff8B7wGBAQAB/wH0AcwBmQL/Av4C/wH+AfsC/wH8AfcB/wGlARsBAAH/GAADOwFjAcEBQQELAf8B6gGv
-        AT8B/wHjAbIBQQH/AekBuwGBAf8B6gHAAYMB/wHmAbsBggH/AVwCVQHqAzUBV1QAAcEBPQEAI/8B/gL/
-        Af4B+gH/AakBHwEAAf8QAAHBAT0BACP/Af4C/wH+AfoB/wGpAR8BAAH/HAADUAGaAcsBgQEYAf8B6QG2
-        AYEB/wHnAb0BhAH/AWICSAH2A0IBdAMCAQNYAAHBAT4BAAH/AcEBPgEAAf8BwAE9AQAB/wG9AToBAAH/
-        Ab0BOQEAAf8BuwE3AQAB/wG4ATMBAAH/AbYBMAEAAf8BtAEtAQAB/wGyASoBAAH/AbABJwEAAf8BrAEk
-        AQAB/xAAAcEBPgEAAf8BwQE+AQAB/wHAAT0BAAH/Ab0BOgEAAf8BvQE5AQAB/wG7ATcBAAH/AbgBMwEA
-        Af8BtgEwAQAB/wG0AS0BAAH/AbIBKgEAAf8BsAEnAQAB/wGsASQBAAH/IAABWQJXAcIBXwFdAUIB+wFP
-        Ak4BlwMJAQz/AFkAAUIBTQE+BwABPgMAASgDAAFAAwABEAMAAQEBAAEBBQABgBcAA/8BAAb/AgABwAED
-        AcABAwH8AR8CAAHAAQMBwAEDAfgBDwIAAcABAwHAAQMB4AEPAgABwAEDAcABAwGAAQcCAAHAAQMBwAED
-        AQABAwIAAcABAwHAAQMBAAEDAgABwAEDAcABAwEAAQECAAHAAQMBwAEDAYADAAHAAQMBwAEDAYADAAHA
-        AQMBwAEDAcADAAHAAQMBwAEDAeABAQIAAcABAwHAAQMB8AEHAgABwAEDAcABAwH4AQ8CAAHAAQMBwAED
-        AfwBPwIABv8CAAs=
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAAg
+        DQAAAk1TRnQBSQFMAgEBAwEAAbQBAQG0AQEBEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        AwABEAMAAQEBAAEgBgABEP8AGwABnQEQAQAB/wGZAQwBAAH/AZcBCQEAAf8BlQEHAQAB/wGSAQMBAAH/
+        AZABAQEAAf8BjAIAAf8BiwIAAf8BiAIAAf8BhwIAAf8BhgIAAf8BgwIAAf8QAAGdARABAAH/AZkBDAEA
+        Af8BlwEJAQAB/wGVAQcBAAH/AZIBAwEAAf8BkAEBAQAB/wGMAgAB/wGLAgAB/wGIAgAB/wGHAgAB/wGG
+        AgAB/wGDAgAB/yAAAwQBBgFIAkcBgwFiAlgB6QFIAkcBgwMQARVcAAGgARQBAAL/AfcB7QH/Af4B9gHn
+        Af8B/gHzAeIC/wHwAdwB/wH+Ae4B1QH/Af4B7QHQAf8DAAH/AwAB/wEoAQgBAAH/AwAB/wGEAgAB/xAA
+        AaABFAEAAv8B9wHtAf8B/gH2AecB/wH+AfMB4gL/AfAB3AH/Af4B7gHVAf8B/gHtAdAB/wH+AeoBygH/
+        Af4B5wHFAf8B/gHlAb8B/wH+AeIBuAH/AYQCAAH/HAADOwFkAVkCQgH1AfoB1wGvAf8BtgGIAT4B/wEA
+        ARQB3gH/AVwCWQHPAwQBBlgAAaQBGAEAAv8B+gHyAv8B9wHtAv8B9gHpAv8B9AHiAv8B8AHdAf8DAAH/
+        AwAB/wHXAYcBIgH/AdcBhwEiAf8BKAEIAQAB/wGIAgAB/xAAAaQBGAEAAv8B+gHyAv8B9wHtAf8BnAFB
+        ASwB/wFBARABAwH/AZEBPQEzAf8B9gHjAcwC/wHtAdAC/wHqAcsB/wH+AecBxQH/Af4B5gHAAf8BiAIA
+        Af8UAAMqAUEBYAJZAesB9AHRAacB/wHcAaEBQAH/AakBGQEAAf8BsAEeAQAB/wGBATgBgwH/ASMBOwHt
+        Af8DUwGqWAABpwEcAQAC/wH8AfcC/wH6AfMC/wH4Ae4C/wH3AekB/wMAAf8DAAH/AdcBhwEiAf8B1wGH
+        ASIB/wHXAYcBIgH/AdcBhwEiAf8BigIAAf8QAAGnARwBAAL/AfwB9wL/AfoB8wH/AYIBFgEAAf8BPwEC
+        AQAB/wEyAgAB/wGBASUBGQL/Ae8B1wH/Af4B7QHRAv8B6gHLAf8B/gHnAcUB/wGKAgAB/wwAAx0BKgFd
+        AlkB1wHwAcwBowH/AecBvAGRAf8BqgEeAQAB/wG8ASsBAAH/AcwBPwEAAf8BzwFFAQAB/wG1ASgBAAH/
+        AToBLwGPAf8DTgHwAxwBJ1QAAasBIAEAAv8B/gH7Av8B/AH3Av8B+gHzAf8DAAH/AwAB/wEoAQgBAAH/
+        AwAB/wHXAYcBIgH/AdcBhwEiAf8B1wGHASIB/wGOAgAB/xAAAasBIAEAAv8B/gH7Av8B/AH3Af8B1wG2
+        AZoB/wGCARIBAAH/AUUBBQEAAf8BOQIAAf8B9gHlAdMC/wHvAdgB/wH+Ae0B0QH/Af4B6gHMAf8BjgIA
+        Af8IAAFYAlYBuwHmAb0BkQH/AfAB1wG6Af8BrwEoAQAB/wG1ASQBAAH/AcwBPgEAAf8BzgFDAQAB/wHQ
+        AUgBAAH/AdEBgQEAAf8B0wGBAQAB/wGtAScBAAH/AQoBpAHFAf8DUwHxAwsBD1AAAa8BJQEAAv8B/gP/
+        Af4B+wH/AwAB/wMAAf8B1wGHASIB/wHXAYcBIgH/ASgBCAEAAf8DAAH/AdcBhwEiAf8DAAH/AZEBAgEA
+        Af8QAAGvASUBAAL/Af4D/wH+AfsC/wH7AfgB/wHzAeUB1wH/AcsBpQGIAf8BgQEPAQAB/wH0AeYB1QL/
+        AfMB3gH/Ae4B3AHGAv8B7QHTAf8BkQECAQAB/wgAAacBLAEJAf8BXwFJASEB+wGtAR0BAAH/AcsBPQEA
+        Af8BzgFCAQAB/wHPAUgBAAH/AdEBgQEAAf8B0wGBAQAB/wHVAYIBAAH/AdcBiAEAAf8B1wGLAQAB/wGk
+        ASUBAAH/ASwBwgHiAf8BXwJcAdRQAAGyASkBAAX/AwAB/wMAAf8B1wGHASIB/wHXAYcBIgH/AdcBhwEi
+        Af8B1wGHASIB/wEoAQgBAAH/AwAB/wMAAf8BlQEFAQAB/xAAAbIBKQEACv8B/gH8Av8B/AH4Av8B+wH0
+        Af8BkAEaAQAB/wH3AeoB3AL/AfQB5QH/AawBhgFDAv8B8AHaAf8BlQEFAQAB/wgAA1IBqQHKAUcBCAH/
+        AdQBgQEAAf8BzgFGAQAB/wHRAYEBAAH/AdMBgQEAAf8B1AGCAQAB/wHXAYcBAAH/AdgBjAEAAf8B2gGR
+        AQQB/wHcAZYBCwH/AdkBlgERAf8BigElAQAB/wEoAX8BIwH+AzMBUkwAAbUBLQEACf8DAAH/AwAB/wHX
+        AYcBIgH/AdcBhwEiAf8B1wGHASIB/wMAAf8DAAH/Af4B8gHgAf8BlwEJAQAB/xAAAbUBLQEADv8B/gH7
+        Av8B/AH4Af8BoQEmAQAB/wH4AesB4QH/AfoB7wHiAf8BgQEUAQAB/wH+AfIB4AH/AZcBCQEAAf8MAAFe
+        AlsB0AHVAYMBFQH/AdMBgQEAAf8B1AGBAQAB/wHVAYYBAAH/AdgBiwEAAf8B2QGQAQIB/wHcAZUBCgH/
+        Ad0BmgETAf8B4AGfARsB/wHhAaUBJAH/AdgBmAEhAf8BRQFGAQQB/wE9AX8BOgH+AxwBKEgAAbcBMAEA
+        Df8DAAH/AwAB/wHXAYcBIgH/AwAB/wMAAv8B9wHrAf8B/gH2AeYB/wGaAQ0BAAH/EAABtwEwAQAS/wL+
+        Af8BtQEvAQAB/wH6Ae8B4gH/AcQBkQE4Af8BkAEdAQAB/wH+AfYB5gH/AZoBDQEAAf8MAAMHAQkDXQHt
+        Ad4BkgEfAf8B1AGGAQAB/wHZAY8BAAH/AdoBkwEIAf8B3QGZAREB/wHeAZ4BGQH/AeEBpAEiAf8B4gGp
+        ASsB/wHjAa0BNQH/AeYBtAE+Af8B0AGTASgB/wJ/AVEB/gNZAcdIAAG6ATMBABH/AwAB/wMAAf8DAAL/
+        AfsB9gL/AfoB8AL/AfgB7QH/AZ4BEQEAAf8QAAG6ATMBABX/AccBPAEAAf8BwAFBAQAB/wGnASMBAAH/
+        AdEBpgGBAv8B+AHtAf8BngERAQAB/xAAAxQBGwJNASkB+gHmAZ4BKQH/AdkBkgEMAf8B3gGeARgB/wHg
+        AaMBIQH/AeIBpwEpAf8B4wGsATIB/wHmAbIBPAH/AecBtwFGAf8B6QG8AYEB/wHrAcIBhwH/AV8BUwEq
+        AfsDGwEmSAABvQE3AQAV/wMAA/8B/AL/Af4B+wL/AfwB9gL/AfoB8gH/AaEBFQEAAf8QAAG9ATcBABX/
+        AdwBRgEAAf8BygE5AQAB/wHhAbEBgQL/AfwB9gL/AfoB8gH/AaEBFQEAAf8UAAMkATYBfwFdATAB/gHr
+        AaoBNQH/Ad4BoQEkAf8B4wGsATEB/wHlAbEBOwH/AecBtwFFAf8B6QG8AYEB/wHqAcEBhAH/AeEBsQGB
+        Af8BYQJcAdwDJAE2TAABwAE6AQAe/wL+Av8B/gH7Av8B/AH3Af8BpQEZAQAB/xAAAcABOgEAFf8B7wGB
+        AQAB/wH0AcwBmQL/Av4C/wH+AfsC/wH8AfcB/wGlARkBAAH/GAADOwFjAcEBPwEJAf8B6gGvAT0B/wHj
+        AbIBPwH/AekBuwGBAf8B6gHAAYMB/wHmAbsBggH/AVwCVQHqAzUBV1QAAcEBOwEAI/8B/gL/Af4B+gH/
+        AakBHQEAAf8QAAHBATsBACP/Af4C/wH+AfoB/wGpAR0BAAH/HAADUAGaAcsBgQEWAf8B6QG2AYEB/wHn
+        Ab0BhAH/AWICSAH2A0IBdAMCAQNYAAHBATwBAAH/AcEBPAEAAf8BwAE7AQAB/wG9ATgBAAH/Ab0BNwEA
+        Af8BuwE1AQAB/wG4ATEBAAH/AbYBLgEAAf8BtAErAQAB/wGyASgBAAH/AbABJQEAAf8BrAEiAQAB/xAA
+        AcEBPAEAAf8BwQE8AQAB/wHAATsBAAH/Ab0BOAEAAf8BvQE3AQAB/wG7ATUBAAH/AbgBMQEAAf8BtgEu
+        AQAB/wG0ASsBAAH/AbIBKAEAAf8BsAElAQAB/wGsASIBAAH/IAABWQJXAcIBXwFdAUIB+wFPAk4BlwMJ
+        AQz/AFkAAUIBTQE+BwABPgMAASgDAAFAAwABEAMAAQEBAAEBBQABgBcAA/8BAAb/AgABwAEDAcABAwH8
+        AR8CAAHAAQMBwAEDAfgBDwIAAcABAwHAAQMB4AEPAgABwAEDAcABAwGAAQcCAAHAAQMBwAEDAQABAwIA
+        AcABAwHAAQMBAAEDAgABwAEDAcABAwEAAQECAAHAAQMBwAEDAYADAAHAAQMBwAEDAYADAAHAAQMBwAED
+        AcADAAHAAQMBwAEDAeABAQIAAcABAwHAAQMB8AEHAgABwAEDAcABAwH4AQ8CAAHAAQMBwAEDAfwBPwIA
+        Bv8CAAs=
 </value>
   </data>
   <data name="tabSearch.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
   <data name="tabSearch.Size" type="System.Drawing.Size, System.Drawing">
-    <value>911, 5</value>
+    <value>911, 436</value>
   </data>
   <data name="tabSearch.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -466,81 +505,6 @@
   <data name="&gt;&gt;tabSearch.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="dataExplorer1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="dataExplorer1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="dataExplorer1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>897, 0</value>
-  </data>
-  <data name="dataExplorer1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;dataExplorer1.Name" xml:space="preserve">
-    <value>dataExplorer1</value>
-  </data>
-  <data name="&gt;&gt;dataExplorer1.Type" xml:space="preserve">
-    <value>VaultAtlas.UI.Controls.DataExplorer, VaultAtlas.Editor, Version=1.0.5701.27111, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;dataExplorer1.Parent" xml:space="preserve">
-    <value>tabPage1</value>
-  </data>
-  <data name="&gt;&gt;dataExplorer1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="flacAtlasControl1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="flacAtlasControl1.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Tahoma, 8.25pt</value>
-  </data>
-  <data name="flacAtlasControl1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="flacAtlasControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>897, 0</value>
-  </data>
-  <data name="flacAtlasControl1.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;flacAtlasControl1.Name" xml:space="preserve">
-    <value>flacAtlasControl1</value>
-  </data>
-  <data name="&gt;&gt;flacAtlasControl1.Type" xml:space="preserve">
-    <value>VaultAtlas.FlacAtlas.FlacAtlasControl, VaultAtlas.Editor, Version=1.0.5701.27111, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;flacAtlasControl1.Parent" xml:space="preserve">
-    <value>tabPageDiscs</value>
-  </data>
-  <data name="&gt;&gt;flacAtlasControl1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="searchControl1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="searchControl1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 3</value>
-  </data>
-  <data name="searchControl1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>897, 0</value>
-  </data>
-  <data name="searchControl1.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;searchControl1.Name" xml:space="preserve">
-    <value>searchControl1</value>
-  </data>
-  <data name="&gt;&gt;searchControl1.Type" xml:space="preserve">
-    <value>VaultAtlas.UI.SearchControl, VaultAtlas.Editor, Version=1.0.5701.27111, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;searchControl1.Parent" xml:space="preserve">
-    <value>tabPage2</value>
-  </data>
-  <data name="&gt;&gt;searchControl1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -551,7 +515,7 @@
     <value>5, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>911, 5</value>
+    <value>911, 436</value>
   </data>
   <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
     <value>CenterScreen</value>

@@ -97,6 +97,12 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.WindowsAPICodePack">
+      <HintPath>..\..\..\dep\Microsoft.WindowsAPICodePack.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAPICodePack.Shell">
+      <HintPath>..\..\..\dep\Microsoft.WindowsAPICodePack.Shell.dll</HintPath>
+    </Reference>
     <Reference Include="System">
       <Name>System</Name>
     </Reference>
@@ -131,6 +137,7 @@
     <Compile Include="FlacAtlas\Disc.cs" />
     <Compile Include="FlacAtlas\DiscFileInfo.cs" />
     <Compile Include="FlacAtlas\DriveInformation.cs" />
+    <Compile Include="FlacAtlas\GenericFileInfoProvider.cs" />
     <Compile Include="FlacAtlas\LocalDirectory.cs" />
     <Compile Include="FlacAtlas\LocalFileInfo.cs" />
     <Compile Include="FlacAtlas\MediaFormatInfo.cs" />

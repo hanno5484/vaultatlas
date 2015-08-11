@@ -27,6 +27,12 @@ namespace VaultAtlas.FlacAtlas
                 infos = GetAllFiles(_directory, "*.mp3", "*.mp2").Select(fi => new MpegProvider().GetMediaFormatInfo(fi)).ToList();
             }
 
+            infos = infos.Concat(GetAllFiles(_directory, "*.mp4", "*.flv", "*.mkv", "*.vob")
+                .Select(f => new GenericFileInfoProvider().GetMediaFormatInfo(f))).ToList();
+
+            if (!infos.Any())
+                return;
+
             var formatInfo = GetAggregateFormatInfo(infos);
 
             if (formatInfo.LengthSeconds > 0)
