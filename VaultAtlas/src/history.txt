@@ -1,0 +1,26 @@
+I wrote the first version of VaultAtlas in 2001, when it was actually called
+CDX, and written in Java. One of the first things it had was an importer
+for plain-list tape lists, because that's what I was working with at the
+time. I also seem to remember that CDX had the ability to store text files
+for each show, as well as an exporter that created HTML files that I could
+send to other people.
+
+My source files for CDX were last touched in 2002 and I must have used the
+tool until about 2006, when I decided to rewrite the program from scratch
+using C#.
+
+This new version used a .NET data set that would get serialized to an XML
+file when you saved, and it had some nice filtering capabilities. Over time
+I added the ability to read some basic FLAC metadata (again because FLAC is
+all I use for audio).
+
+I never gave out these tools except to one friend who used it to organize
+his archival DVD collection, and very patiently lived with its bugs, even
+as one bug left the entire XML file corrupted.
+
+I am cleaning up the code once again, this time making the program available
+to whoever wants to use it.
+
+You can see that the controls were created using Visual Studio 2003 - the
+WinForms designer did not create a partial designer class back then.
+
