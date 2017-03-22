@@ -255,6 +255,7 @@ namespace VaultAtlas.UI.Controls
             this.showList.RowTemplate.Height = 20;
             this.showList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.showList.ShowCellErrors = false;
+		    this.showList.ShowCellToolTips = false;
             this.showList.ShowEditingIcon = false;
             this.showList.ShowRowErrors = false;
             this.showList.Size = new System.Drawing.Size(469, 153);
