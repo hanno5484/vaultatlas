@@ -338,6 +338,7 @@ namespace VaultAtlas.UI
                             textEd.Dock = DockStyle.Fill;
                         }
 
+					    textEd.Resource = res;
                         textEd.Value = res.Value;
 						
 						break;
