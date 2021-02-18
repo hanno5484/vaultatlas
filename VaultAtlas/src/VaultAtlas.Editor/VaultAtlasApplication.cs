@@ -34,7 +34,7 @@ namespace VaultAtlas
 				}
 
                 newArtist.Row.Table.Rows.Add(newArtist.Row);
-                Model.Artists.Adapter.Update(Model.Artists.Table);
+                Model.Artists.UpdateTable(Model.Artists.Table);
 
 				return newArtist;
 			}
@@ -61,7 +61,7 @@ namespace VaultAtlas
 			            ResourceType = "Text"
 			        };
 			        adapter.Table.Rows.Add(newRow);
-			        adapter.Adapter.Update(new[] {res.Row});
+			        adapter.Update(res.Row);
 			    }
 			}
 

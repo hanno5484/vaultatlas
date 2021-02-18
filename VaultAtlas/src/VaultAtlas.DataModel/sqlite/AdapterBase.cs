@@ -20,7 +20,12 @@ namespace VaultAtlas.DataModel.sqlite
 
         public DataTable Table { get; private set; }
 
-        public SQLiteDataAdapter Adapter { get; private set; }
+        internal SQLiteDataAdapter Adapter { get; private set; }
+
+        public void UpdateTable(DataTable table)
+        {
+            Adapter.Update(table);
+        }
 
         public void Update(DataRow row)
         {

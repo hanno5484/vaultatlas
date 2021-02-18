@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -19,6 +18,9 @@ namespace VaultAtlas.FlacAtlas
 
         public void Match(Action<string, Show> associateAction)
         {
+            throw new NotImplementedException();
+
+            /*
             var showResourceInfos = new Dictionary<string, Resource>();
 
             foreach (var resource in GetResourcesAdapter().Table.Rows.Cast<DataRow>().Select(r => new Resource(r)))
@@ -46,9 +48,11 @@ namespace VaultAtlas.FlacAtlas
             form.Controls.Add(v);
             v.AddItems(res);
             form.ShowDialog();
+            */
         }
 
 
+        /*
         public AdapterBase GetResourcesAdapter()
         {
             var conn = Model.SingleModel.Conn;
@@ -62,13 +66,14 @@ namespace VaultAtlas.FlacAtlas
             da.Fill(dt);
 
             return new AdapterBase(dt, da);
-        }
+        }*/
 
         private static string GetMd5String(string str)
         {
             return Encoding.UTF8.GetString(Md5.ComputeHash(Encoding.UTF8.GetBytes(str)));
         }
 
+        /* TODO must be moved to Model because of SQlIte references
         private static IDictionary<string, Show> GetCatalogInfos(IDictionary<string, Resource> dict, IEnumerable<Disc> rootDiscs)
         {
             var res = new Dictionary<string, Show>();
@@ -109,6 +114,7 @@ namespace VaultAtlas.FlacAtlas
             }
             return res;
         }
+        */
 
         private static void GetCatalogInfoRecursive(IDictionary<string, Resource> targetDict, string localPath, IDictionary<string, Show> result)
         {

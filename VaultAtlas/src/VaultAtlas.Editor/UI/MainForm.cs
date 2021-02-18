@@ -1,11 +1,7 @@
 using System;
-using System.Data.SQLite;
-using System.Diagnostics;
 using System.Linq;
-using VaultAtlas.DataModel.FlacAtlas;
 using VaultAtlas.FlacAtlas;
 using VaultAtlas.Properties;
-using VaultAtlas.UI.SearchReplace;
 using VaultAtlas.DataModel.ModelUI;
 using VaultAtlas.DataModel;
 using VaultAtlas.UI;
@@ -13,7 +9,6 @@ using VaultAtlas.UI.Controls;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
-using System.Data;
 using System.IO;
 
 namespace VaultAtlas
@@ -596,6 +591,7 @@ namespace VaultAtlas
 
         private void menuMatchFlacAtlas_Click(object sender, EventArgs e)
         {
+            /* TODO
             IProgressCallback progressCallback = null;
 
             new ShowDirectoryMatcher().Match(async (path, show) =>
@@ -608,6 +604,7 @@ namespace VaultAtlas
             });
 
             Model.SingleModel.Shows.Adapter.Update(Model.SingleModel.Shows.Table);
+            */
         }
 
 	    public Model Model
